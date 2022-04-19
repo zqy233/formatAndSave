@@ -17,15 +17,19 @@
     "onCommand:extension.copyEditorAutoFold"
   ],
   "contributes": {
-    "commands": [{
-      "command": "extension.formatAndSave",
-      "title": "format and save"
-    }, {
-      "command": "extension.copyEditorAutoFold",
-      "title": "copy editor and auto fold"
-    }],
+    "commands": [
+      {
+        "command": "extension.formatAndSave",
+        "title": "format and save"
+      },
+      {
+        "command": "extension.copyEditorAutoFold",
+        "title": "copy editor and auto fold"
+      }
+    ],
     "menus": {
-      "editor/context": [{
+      "editor/context": [
+        {
           "command": "extension.formatAndSave",
           "group": "z_commands",
           "when": "editorTextFocus"
@@ -37,15 +41,18 @@
         }
       ]
     },
-    "keybindings": [{
-      "command": "extension.formatAndSave",
-      "key": "Ctrl+S",
-      "when": "editorTextFocus"
-    }, {
-      "command": "extension.copyEditorAutoFold",
-      "key": "Ctrl+K",
-      "when": "editorTextFocus"
-    }],
+    "keybindings": [
+      {
+        "command": "extension.formatAndSave",
+        "key": "Ctrl+S",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.copyEditorAutoFold",
+        "key": "Ctrl+J",
+        "when": "editorTextFocus"
+      }
+    ],
     "configuration": {
       "title": "formatAndSave",
       "properties": {
