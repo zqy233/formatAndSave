@@ -1,9 +1,9 @@
 {
   "id": "zqy-formatAndSave",
   "name": "formatAndSave",
-  "description": "功能1：一键格式化保存，功能2：开启关闭双分栏模式且自动折叠",
+  "description": "功能1：一键格式化保存，功能2：双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -38,7 +38,7 @@
           "command": "extension.copyEditorAutoFold",
           "group": "z_commands",
           "when": "editorTextFocus"
-        }
+        }  
       ]
     },
     "keybindings": [
