@@ -1,8 +1,10 @@
 const hx = require("hbuilderx")
 // 双分栏且自动折叠
 const copyEditorAutoFold = hx.commands.registerCommand("extension.copyEditorAutoFold", async () => {
+  // 获取分栏模式的配置
   let config = hx.workspace.getConfiguration("formatAndSave")
   const mode = config.get("mode")
+  // 获取当前编辑器
   let activeEditor = await hx.window.getActiveTextEditor()
   // 当前编辑器的所有文本
   const word = activeEditor.document.getText()

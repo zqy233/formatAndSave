@@ -3,7 +3,7 @@
   "name": "formatAndSave",
   "description": "功能：vue文件双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -13,28 +13,44 @@
   ],
   "main": "./extension",
   "activationEvents": [
-    "onCommand:extension.copyEditorAutoFold"
+    "onCommand:extension.copyEditorAutoFold",
+    "onCommand:extension.jumpLastQuote",
+    "onCommand:extension.jumpNextQuote"
   ],
   "contributes": {
-    "commands": [
-      {
+    "commands": [{
         "command": "extension.copyEditorAutoFold",
         "title": "copy editor and auto fold"
+      },
+      {
+        "command": "extension.jumpLastQuote",
+        "title": "jump quote"
+      },
+      {
+        "command": "extension.jumpNextQuote",
+        "title": "jump quote"
       }
     ],
     "menus": {
-      "editor/context": [
-        {
-          "command": "extension.copyEditorAutoFold",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        }
-      ]
+      "editor/context": [{
+        "command": "extension.copyEditorAutoFold",
+        "group": "z_commands",
+        "when": "editorTextFocus"
+      }]
     },
-    "keybindings": [
-      {
+    "keybindings": [{
         "command": "extension.copyEditorAutoFold",
         "key": "Ctrl+J",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.jumpLastQuote",
+        "key": "Alt+Up",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.jumpNextQuote",
+        "key": "Alt+Down",
         "when": "editorTextFocus"
       }
     ],
