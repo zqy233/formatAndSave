@@ -1,9 +1,9 @@
 {
   "id": "zqy-formatAndSave",
   "name": "formatAndSave",
-  "description": "功能：vue文件双分栏模式且自动折叠",
+  "description": "主要功能：vue文件双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -13,12 +13,17 @@
   ],
   "main": "./extension",
   "activationEvents": [
+    "onCommand:extension.formatAndSave",
     "onCommand:extension.copyEditorAutoFold",
     "onCommand:extension.jumpLastQuote",
     "onCommand:extension.jumpNextQuote"
   ],
   "contributes": {
     "commands": [{
+        "command": "extension.formatAndSave",
+        "title": "format and save"
+      },
+      {
         "command": "extension.copyEditorAutoFold",
         "title": "copy editor and auto fold"
       },
@@ -33,14 +38,25 @@
     ],
     "menus": {
       "editor/context": [{
-        "command": "extension.copyEditorAutoFold",
-        "group": "z_commands",
-        "when": "editorTextFocus"
-      }]
+          "command": "extension.formatAndSave",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "extension.copyEditorAutoFold",
+          "group": "z_commands",
+          "when": "editorTextFocus"
+        }
+      ]
     },
     "keybindings": [{
         "command": "extension.copyEditorAutoFold",
         "key": "Ctrl+J",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.formatAndSave",
+        "key": "Ctrl+S",
         "when": "editorTextFocus"
       },
       {
