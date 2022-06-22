@@ -1,5 +1,7 @@
 # 🎉formatAndSave
 
+> 插件市场:https://ext.dcloud.net.cn/plugin?id=7695
+
 ## ✨功能1
 
 > 一键触发格式化和保存
