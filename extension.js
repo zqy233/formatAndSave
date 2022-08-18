@@ -1,11 +1,14 @@
+const formatAndSave = require("./formatAndSave.js")
 const copyEditorAutoFold = require("./copyEditorAutoFold.js")
 const jumpQuote = require("./jumpQuote.js")
-const formatAndSave = require("./formatAndSave.js")
 //该方法将在插件激活的时候调用
 function activate(context) {
-  //订阅销毁钩子，插件禁用的时候，自动注销该command
   context.subscriptions.push(formatAndSave)
-  context.subscriptions.push(copyEditorAutoFold)
+  context.subscriptions.push(copyEditorAutoFold.foldAllExpandAndCopyEditor)
+  context.subscriptions.push(copyEditorAutoFold.copyEditorAll)
+  context.subscriptions.push(copyEditorAutoFold.contractScriptTag)
+  context.subscriptions.push(copyEditorAutoFold.contractNoScriptTag)
+  context.subscriptions.push(copyEditorAutoFold.contractStyleTag)
   context.subscriptions.push(jumpQuote.jumpLastQuote)
   context.subscriptions.push(jumpQuote.jumpNextQuote)
 }

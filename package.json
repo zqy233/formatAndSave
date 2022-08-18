@@ -3,7 +3,7 @@
   "name": "formatAndSave",
   "description": "主要功能：vue文件双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -14,18 +14,39 @@
   "main": "./extension",
   "activationEvents": [
     "onCommand:extension.formatAndSave",
-    "onCommand:extension.copyEditorAutoFold",
+    "onCommand:extension.foldAllExpandAndCopyEditor",
+    "onCommand:extension.copyEditorAll",
+    "onCommand:extension.contractScriptTag",
+    "onCommand:extension.contractNoScriptTag",
+    "onCommand:extension.contractStyleTag",
     "onCommand:extension.jumpLastQuote",
     "onCommand:extension.jumpNextQuote"
   ],
   "contributes": {
-    "commands": [{
+    "commands": [
+      {
         "command": "extension.formatAndSave",
-        "title": "format and save"
+        "title": "重排代码格式并保存"
       },
       {
-        "command": "extension.copyEditorAutoFold",
-        "title": "copy editor and auto fold"
+        "command": "extension.foldAllExpandAndCopyEditor",
+        "title": "无折叠模式"
+      },
+      {
+        "command": "extension.copyEditorAll",
+        "title": "左分栏不折叠，右分栏则创建三次，分别显示template、script、style标签"
+      },
+      {
+        "command": "extension.contractScriptTag",
+        "title": "左分栏显示template、style标签，右分栏显示script标签"
+      },
+      {
+        "command": "extension.contractNoScriptTag",
+        "title": "左分栏显示script标签，右分栏显示template、style标签"
+      },
+      {
+        "command": "extension.contractStyleTag",
+        "title": "左分栏显示template、script标签，右分栏显示style标签"
       },
       {
         "command": "extension.jumpLastQuote",
@@ -37,26 +58,53 @@
       }
     ],
     "menus": {
-      "editor/context": [{
+      "editor/context": [
+        {
           "command": "extension.formatAndSave",
           "group": "z_commands",
           "when": "editorTextFocus"
         },
         {
-          "command": "extension.copyEditorAutoFold",
-          "group": "z_commands",
+          "id": "copyEditor",
+          "title": "向右复制分栏并自动折叠",
+          "group": "z_commands"
+        },
+        {
+          "command": "extension.foldAllExpandAndCopyEditor",
+          "group": "copyEditor@1",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "extension.copyEditorAll",
+          "group": "copyEditor@1",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "extension.contractScriptTag",
+          "group": "copyEditor@1",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "extension.contractNoScriptTag",
+          "group": "copyEditor@1",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "extension.contractStyleTag",
+          "group": "copyEditor@1",
           "when": "editorTextFocus"
         }
       ]
     },
-    "keybindings": [{
-        "command": "extension.copyEditorAutoFold",
-        "key": "Ctrl+J",
-        "when": "editorTextFocus"
-      },
+    "keybindings": [
       {
         "command": "extension.formatAndSave",
         "key": "Ctrl+S",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.copyEditorAll",
+        "key": "Ctrl+J",
         "when": "editorTextFocus"
       },
       {
@@ -69,17 +117,7 @@
         "key": "Alt+Down",
         "when": "editorTextFocus"
       }
-    ],
-    "configuration": {
-      "title": "formatAndSave",
-      "properties": {
-        "formatAndSave.mode": {
-          "type": "boolean",
-          "default": true,
-          "description": "控制分栏的折叠展开模式,勾选则左侧只折叠script,右侧只展开script;不勾选则相反"
-        }
-      }
-    }
+    ]
   },
   "extensionDependencies": [
     "plugin-manager"

@@ -18,7 +18,7 @@ const jumpLastQuote = hx.commands.registerCommand("extension.jumpLastQuote", asy
   let activeEditor = await hx.window.getActiveTextEditor() // 获取当前编辑器
   const word = activeEditor.document.getText() // 当前编辑器的所有文本
   const positions = getAllIndex(word, "\"")
-  const cursorPosition = activeEditor.selection.active
+  const cursorPosition = activeEditor.selection.active // 光标所在位置
   for (let i = 0; i < positions.length; i++) {
     if (positions[i] < cursorPosition && positions[i + 1] > cursorPosition) {
       // 偶数说明在内侧，奇数说明在外侧
