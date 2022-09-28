@@ -1,19 +1,5 @@
 const hx = require("hbuilderx")
 
-// 获取插件配置，设计上目前不使用
-// let config = hx.workspace.getConfiguration("formatAndSave")
-// const mode = config.get("mode")
-//  "configuration": {
-//       "title": "formatAndSave",
-//       "properties": {
-//         "formatAndSave.mode": {
-//           "type": "boolean",
-//           "default": true,
-//           "description": "控制分栏的折叠展开模式,勾选则左侧只折叠script,右侧只展开script;不勾选则相反"
-//         }
-//       }
-//     }
-
 // 无折叠模式
 const foldAllExpandAndCopyEditor = hx.commands.registerCommand("extension.foldAllExpandAndCopyEditor", async () => {
   let activeEditor = await hx.window.getActiveTextEditor() // 获取当前编辑器
