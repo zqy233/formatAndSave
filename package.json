@@ -3,7 +3,7 @@
   "name": "formatAndSave",
   "description": "1.一键格式化与保存，2.html和css中嵌套注释，3.快速选中双引号区域，4.生成块注释`/** */`，5.使用vscode打开所在目录，6.vue文件双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
