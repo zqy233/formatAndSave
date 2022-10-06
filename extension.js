@@ -3,6 +3,7 @@ const copyEditorAutoFold = require("./src/copyEditorAutoFold.js")
 const jumpQuote = require("./src/jumpQuote.js")
 const openWithVscode = require("./src/openWithVscode.js")
 const blockComment = require("./src/blockComment.js")
+const powerfulComment = require("./src/powerfulComment.js")
 //该方法将在插件激活的时候调用
 function activate(context) {
   context.subscriptions.push(formatAndSave)
@@ -15,6 +16,7 @@ function activate(context) {
   context.subscriptions.push(jumpQuote.jumpNextQuote)
   context.subscriptions.push(openWithVscode)
   context.subscriptions.push(blockComment)
+  context.subscriptions.push(powerfulComment)
 }
 //该方法将在插件禁用的时候调用（目前是在插件卸载的时候触发）
 function deactivate() {}

@@ -1,9 +1,9 @@
 {
   "id": "zqy-formatAndSave",
   "name": "formatAndSave",
-  "description": "主要功能：vue文件双分栏模式且自动折叠",
+  "description": "1.一键格式化与保存，2.html和css中嵌套注释，3.快速选中双引号区域，4.生成块注释`/** */`，5.使用vscode打开所在目录，6.vue文件双分栏模式且自动折叠",
   "displayName": "formatAndSave",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -22,7 +22,8 @@
     "onCommand:extension.jumpLastQuote",
     "onCommand:extension.jumpNextQuote",
     "onCommand:extension.openWithVscode",
-    "onCommand:extension.blockComment"
+    "onCommand:extension.blockComment",
+    "onCommand:extension.powerfulComment"
   ],
   "contributes": {
     "commands": [{
@@ -51,11 +52,11 @@
       },
       {
         "command": "extension.jumpLastQuote",
-        "title": "jump quote"
+        "title": "跳往上一个引号区域"
       },
       {
         "command": "extension.jumpNextQuote",
-        "title": "jump quote"
+        "title": "跳往下一个引号区域"
       },
       {
         "command": "extension.openWithVscode",
@@ -64,6 +65,10 @@
       {
         "command": "extension.blockComment",
         "title": "块注释/** */"
+      },
+      {
+        "command": "extension.powerfulComment",
+        "title": "嵌套注释"
       }
     ],
     "menus": {
@@ -133,6 +138,11 @@
       {
         "command": "extension.blockComment",
         "key": "Ctrl+Shift+/",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.powerfulComment",
+        "key": "Ctrl+/",
         "when": "editorTextFocus"
       }
     ]
