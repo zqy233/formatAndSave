@@ -26,7 +26,8 @@
     "onCommand:extension.powerfulComment"
   ],
   "contributes": {
-    "commands": [{
+    "commands": [
+      {
         "command": "extension.formatAndSave",
         "title": "重排代码格式并保存"
       },
@@ -72,13 +73,16 @@
       }
     ],
     "menus": {
-      "explorer/context": [{
-        "command": "extension.openWithVscode",
-        "group": "openInExplorer",
-        "title": "使用vscode打开所在目录",
-        "when": "explorerResourceCount == 1 && ( explorerResourceIsFolder || explorerResourceIsWorkspaceFolder)"
-      }],
-      "editor/context": [{
+      "explorer/context": [
+        {
+          "command": "extension.openWithVscode",
+          "group": "openInExplorer",
+          "title": "使用vscode打开所在目录",
+          "when": "explorerResourceCount == 1 && ( explorerResourceIsFolder || explorerResourceIsWorkspaceFolder)"
+        }
+      ],
+      "editor/context": [
+        {
           "command": "extension.formatAndSave",
           "group": "z_commands",
           "when": "editorTextFocus"
@@ -115,7 +119,8 @@
         }
       ]
     },
-    "keybindings": [{
+    "keybindings": [
+      {
         "command": "extension.formatAndSave",
         "key": "Ctrl+S",
         "when": "editorTextFocus"
@@ -150,5 +155,15 @@
   "extensionDependencies": [
     "plugin-manager"
   ],
-  "dependencies": {}
+  "scripts": {
+    "docs": "vitepress dev docs --temp",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  },
+  "keywords": [],
+  "dependencies": {
+    "vitepress": "^1.0.0-alpha.31"
+  },
+  "devDependencies": {},
+  "license": "MIT"
 }

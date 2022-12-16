@@ -1,0 +1,1 @@
+import{_ as e,c as t,o,a}from"./app.61be41f7.js";const f=JSON.parse('{"title":"一键格式化与保存","description":"","frontmatter":{},"headers":[],"relativePath":"guide/formatAndSave.md","lastUpdated":null}'),c={name:"guide/formatAndSave.md"},d=a("",3),s=[d];function i(l,r,_,n,p,m){return o(),t("div",null,s)}const h=e(c,[["render",i]]);export{f as __pageData,h as default};
