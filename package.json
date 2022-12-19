@@ -156,9 +156,9 @@
     "plugin-manager"
   ],
   "scripts": {
-    "docs": "vitepress dev docs --temp",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs": "vitepress dev blog --temp",
+    "docs:build": "vitepress build blog",
+    "docs:serve": "vitepress serve blog"
   },
   "keywords": [],
   "dependencies": {

@@ -5,7 +5,8 @@ const currentVersion = `v${version}`
 
 export default defineConfig({
   base: "/formatAndSave/",
-  title: " ",
+  outDir: "../docs",
+  title: "formatAndSave",
   description: "HBuilderX插件-主要功能：嵌套注释、vue文件双分栏并自动折叠",
   head: [["link", { rel: "icon", href: "/formatAndSave/favicon.ico" }]],
   lastUpdated: true,
@@ -24,7 +25,7 @@ export default defineConfig({
       copyright: `Copyright © 2022.4-${new Date().getFullYear()}.${new Date().getMonth() + 1}`,
     },
     editLink: {
-      pattern: "https://github.com/formatAndSave/edit/main/docs/:path",
+      pattern: "https://github.com/zqy233/formatAndSave/edit/master/blog/:path",
       text: "Edit this page on GitHub",
     },
     socialLinks: [
