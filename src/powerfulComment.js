@@ -21,8 +21,10 @@ function comment(selection, document, activeEditor) {
     } = selection
 
     // 获取开始行结束行的信息，计算上\t\n符号的位置，获取正确的注释位置
-    const startAndEndLine = await Promise.all([document.lineFromPosition(originStart), document.lineFromPosition(
-      originEnd)])
+    const startAndEndLine = await Promise.all([
+      document.lineFromPosition(originStart),
+      document.lineFromPosition(originEnd),
+    ])
     const matchReg1 = startAndEndLine[0].text.match(/^\s*/g)
     const matchReg2 = startAndEndLine[1].text.match(/\s*$/g)
     // 开始位置=行开始位置+\t\n
@@ -32,7 +34,7 @@ function comment(selection, document, activeEditor) {
 
     // 单击，则直接调用命令
     if (originStart === originEnd) {
-      noCommentPositionsDeal(activeEditor, start, end, originStart, originEnd)
+      await hx.commands.executeCommand("editor.action.commentLine")
       return resolve()
     }
 
@@ -59,16 +61,33 @@ function comment(selection, document, activeEditor) {
       // 有<!--和-->注释的情况，获取非注释区域的位置
       const betweenCommentPositions = getBetweenCommentPositions(commentPositions, start, end, word)
       // 如果存在非注释区域，就注释这些区域，如果不存在，那就取消所有注释
-      commentPositionsDeal(betweenCommentPositions, commentPositions, activeEditor, originStart, originEnd)
+      commentPositionsDeal(
+        betweenCommentPositions,
+        commentPositions,
+        activeEditor,
+        originStart,
+        originEnd
+      )
       return resolve()
     }
 
     // 注释是`/*`和`*/`
     if (styleCommentPositions.length) {
       // 有/*和*/注释的情况，获取非注释区域的位置
-      const betweenCommentPositions = getBetweenCommentPositions(styleCommentPositions, start, end, word)
+      const betweenCommentPositions = getBetweenCommentPositions(
+        styleCommentPositions,
+        start,
+        end,
+        word
+      )
       // 如果存在非注释区域，就注释这些区域，如果不存在，那就取消所有注释
-      commentPositionsDeal(betweenCommentPositions, styleCommentPositions, activeEditor, originStart, originEnd)
+      commentPositionsDeal(
+        betweenCommentPositions,
+        styleCommentPositions,
+        activeEditor,
+        originStart,
+        originEnd
+      )
       return resolve()
     }
   })
@@ -150,8 +169,9 @@ function getBetweenCommentPositions(commentPositions, start, end, word) {
     }
     // 中间非注释区域
     if (i + 1 < commentPositions.length) {
-      const matchReg = word.slice(commentPositions[i].end - start, commentPositions[i + 1].start - start).match(
-        /^\s*|\s*$/g)
+      const matchReg = word
+        .slice(commentPositions[i].end - start, commentPositions[i + 1].start - start)
+        .match(/^\s*|\s*$/g)
       if (matchReg.length === 1) continue
       const newStart = commentPositions[i].end + matchReg[0].length
       const newEnd = commentPositions[i + 1].start - matchReg[1].length
@@ -180,7 +200,13 @@ function getBetweenCommentPositions(commentPositions, start, end, word) {
 }
 
 /** 如果存在非注释区域，就注释这些区域，如果不存在，那就取消所有注释 */
-async function commentPositionsDeal(betweenCommentPositions, commentPositions, activeEditor, start, end) {
+async function commentPositionsDeal(
+  betweenCommentPositions,
+  commentPositions,
+  activeEditor,
+  start,
+  end
+) {
   // 存在非注释区域，选中所有非注释区域
   if (betweenCommentPositions.length) {
     activeEditor.setSelection(betweenCommentPositions[0].start, betweenCommentPositions[0].end)
