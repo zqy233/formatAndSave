@@ -33,7 +33,7 @@
 ```html
 <!-- <scroll-view scroll-x="true">
   <view class="scroll-inner"> -->
-    <!-- <image v-for="item in imgList" :key="item.id" :src="item.imageUrl" mode="aspectFill"></image> -->
+<!-- <image v-for="item in imgList" :key="item.id" :src="item.imageUrl" mode="aspectFill"></image> -->
 <!-- </view>
 </scroll-view> -->
 ```
