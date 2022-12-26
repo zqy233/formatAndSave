@@ -45,8 +45,5 @@
 :::
 
  
- <comment/> 
- 
- 
- <comment/> 
+ <git-talk/> 
  

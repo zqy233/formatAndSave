@@ -7,8 +7,5 @@
 安装即生效，无需设置
 
  
- <comment/> 
- 
- 
- <comment/> 
+ <git-talk/> 
  

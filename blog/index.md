@@ -24,8 +24,5 @@ features:
 ---
 
  
- <comment/> 
- 
- 
- <comment/> 
+ <git-talk/> 
  

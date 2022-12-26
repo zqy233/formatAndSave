@@ -23,8 +23,5 @@ process.exec("code " + path, error => {
 ```
 
  
- <comment/> 
- 
- 
- <comment/> 
+ <git-talk/> 
  
