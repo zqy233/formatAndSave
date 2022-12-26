@@ -8,24 +8,22 @@ import md5 from "md5"
 import Gitalk from "gitalk"
 import "gitalk/dist/gitalk.css"
 export default {
-  name: "comment",
+  name: "git-talk",
   data() {
     return {}
   },
   mounted() {
-    script.onload = () => {
-      const commentConfig = {
-        clientID: "78686285d8658a54cb56",
-        clientSecret: "f043ca435bfd63ce0b5a204fe56c008acd6c06f3",
-        repo: "formatAndSave",
-        owner: "zqy233",
-        admin: ["zqy233"],
-        id: md5(location.pathname),
-        distractionFreeMode: false,
-      }
-      const gitalk = new Gitalk(commentConfig)
-      gitalk.render("gitalk-container")
+    const commentConfig = {
+      clientID: "78686285d8658a54cb56",
+      clientSecret: "f043ca435bfd63ce0b5a204fe56c008acd6c06f3",
+      repo: "formatAndSave",
+      owner: "zqy233",
+      admin: ["zqy233"],
+      id: md5(location.pathname),
+      distractionFreeMode: false,
     }
+    const gitalk = new Gitalk(commentConfig)
+    gitalk.render("gitalk-container")
   },
 }
 </script>
