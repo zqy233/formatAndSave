@@ -159,7 +159,7 @@
     "docs": "vitepress dev blog --temp",
     "docs:build": "vitepress build blog",
     "docs:serve": "vitepress serve blog",
-    "gitalk": "node ./doc-build/addMarkdown.js && vitepress build blog",
+    "gitalk": "node ./doc-build/addMarkdown.js",
     "clean": "node ./doc-build/delMarkdown.js"
   },
   "keywords": [],
