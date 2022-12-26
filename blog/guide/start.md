@@ -5,3 +5,7 @@
 点击右侧`使用HBuilderX导入插件`按钮，插件会导入到 HBuilderX 中
 
 安装即生效，无需设置
+
+ 
+ <comment/> 
+ 
