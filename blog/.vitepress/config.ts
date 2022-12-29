@@ -5,7 +5,6 @@ const currentVersion = `v${version}`
 
 export default defineConfig({
   base: "/formatAndSave/",
-  outDir: "../docs",
   title: "formatAndSave",
   description: "HBuilderX插件-主要功能：嵌套注释、vue文件双分栏并自动折叠",
   head: [["link", { rel: "icon", href: "/formatAndSave/favicon.ico" }]],
