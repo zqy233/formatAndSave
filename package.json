@@ -156,18 +156,19 @@
     "plugin-manager"
   ],
   "scripts": {
-    "docs": "vitepress dev blog --temp",
-    "docs:build": "vitepress build blog",
-    "docs:serve": "vitepress serve blog",
+    "docs": "vitepress dev docs --temp",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
     "gitalk": "node ./doc-build/addMarkdown.js",
     "clean": "node ./doc-build/delMarkdown.js"
   },
   "keywords": [],
   "dependencies": {
     "gitalk": "^1.8.0",
-    "md5": "^2.3.0",
+    "md5": "^2.3.0"
+  },
+  "devDependencies": {
     "vitepress": "^1.0.0-alpha.31"
   },
-  "devDependencies": {},
   "license": "MIT"
 }
