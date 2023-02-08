@@ -164,11 +164,23 @@
   },
   "keywords": [],
   "dependencies": {
+    "flexsearch": "^0.7.31",
     "gitalk": "^1.8.0",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "vitepress-plugin-search": "1.0.4-alpha.19"
   },
   "devDependencies": {
-    "vitepress": "^1.0.0-alpha.31"
+    "vitepress": "1.0.0-alpha.45"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "vue",
+        "react",
+        "react-dom",
+        "@algolia/client-search"
+      ]
+    }
   },
   "license": "MIT"
 }
