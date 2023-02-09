@@ -33,7 +33,7 @@ export default defineConfig({
     sidebarMenuLabel: '目录',
     returnToTopLabel: '回到顶部',
     editLink: {
-      pattern: 'https://github.com/zqy233/formatAndSave/edit/master/blog/:path',
+      pattern: 'https://github.com/zqy233/formatAndSave/edit/master/docs/:path',
       text: '在GitHub编辑此页',
     },
     socialLinks: [
