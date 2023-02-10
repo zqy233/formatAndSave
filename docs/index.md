@@ -1,6 +1,6 @@
 ---
 layout: home
-title: Home
+title: HBuilderX插件
 hero:
   name: formatAndSave
   tagline: HBuilderX插件-主要功能：嵌套注释、vue文件双分栏
