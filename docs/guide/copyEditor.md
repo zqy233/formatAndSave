@@ -1,6 +1,6 @@
 # vue 文件双分栏
 
-::: info
+::: tip
 
 - 很多时候滚动是不方便的，尤其是 vue 文件需要对照 template 和 script 标签或者对照 template 和 style 标签的时候，这时候就需要分栏，比较常用的还是双分栏，左右对照
 - 插件提供右键菜单和快捷键的方式，快速进行双分栏，并按折叠模式自动折叠 `script` ，`template` 和 `style`标签
