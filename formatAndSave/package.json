@@ -89,9 +89,9 @@
           "when": "editorTextFocus"
         },
         {
-          "command": "extension.prettier",
-          "group": "z_commands",
-          "when": "editorTextFocus"
+          "id": "prettier",
+          "title": "使用prettier格式化代码",
+          "group": "z_commands"
         },
         {
           "id": "copyEditor",
@@ -172,12 +172,10 @@
     "flexsearch": "^0.7.31",
     "gitalk": "^1.8.0",
     "md5": "^2.3.0",
-    "fast-diff": "^1.2.0",
     "vitepress-plugin-search": "1.0.4-alpha.19"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-alpha.45",
-    "prettier": "2.8.4"
+    "vitepress": "1.0.0-alpha.45"
   },
   "pnpm": {
     "peerDependencyRules": {
