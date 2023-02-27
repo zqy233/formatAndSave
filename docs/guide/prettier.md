@@ -6,9 +6,19 @@
 
 :::
 
-## 旧版本(0.0.14 之前)formatAndSave 命令迁移
+## 旧版本(0.0.14 之前)`formatAndSave`命令迁移
 
-如果使用的是旧版本的 formatAndSave 命令，工具>自定义快捷键>删除 formatAndSave 命令 ctrl+s 配置，按下 ctrl+s 设置以后只选一个为 prettier 格式化代码
+1. 如果使用的是旧版本的`formatAndSave`命令，HBuilderX 上方菜单>工具>自定义快捷键>删除以下代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.formatAndSave","override":true }
+   ```
+
+2. 任意文件中按下`ctrl+s`设置`以后只选一个`为`prettier格式化代码`，工具>自定义快捷键>将会自动生成下方代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.prettier","override":true }
+   ```
 
 ## 用法
 
@@ -26,5 +36,13 @@
 HBuilderX 插件开发提供了保存事件`onWillSaveTextDocument`，为什么不使用该事件触发格式化，而是创建一个`ctrl+s`命令来替换 HBuilderX 默认保存命令？
 
 因为该事件只有编辑后保存才会触发，文件未发生更改情况下不会触发
+
+## 自行设置快捷键
+
+HBuilderX 上方菜单>工具>自定义快捷键>更改插件快捷键
+
+```json
+{"key":"Ctrl+S","command":"extension.prettier","override":true }
+```
 
  <git-talk/>

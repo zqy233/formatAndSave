@@ -1,5 +1,7 @@
 # 嵌套注释
 
+## 用法
+
 ::: info
 
 - 二次封装注释命令，支持 html 和 css 以及 vue 嵌套注释下进行注释
@@ -44,6 +46,13 @@
 
 :::
 
- 
+## 自行设置快捷键
+
+HBuilderX 上方菜单>工具>自定义快捷键>更改插件快捷键
+
+```json
+{"key":"Ctrl+/","command":"extension.powerfulComment","override":true }
+```
+
+
  <git-talk/> 
- 

@@ -35,7 +35,7 @@
 
 ## 自行设置快捷键
 
-HBuilderX 上方菜单>工具>自定义快捷键>右侧加入下方代码并自行配置快捷键即可
+HBuilderX 上方菜单>工具>自定义快捷键>更改插件快捷键
 
 对应的 command 名称：
 
@@ -47,32 +47,32 @@ HBuilderX 上方菜单>工具>自定义快捷键>右侧加入下方代码并自�
 
 ```json
 {
-        "key": "",
-        "command": "extension.foldAllExpandAndCopyEditor",
-        "override": true
-    },
+  "key": "",
+  "command": "extension.foldAllExpandAndCopyEditor",
+  "override": true
+},
 {
-        "key": "Ctrl+J",
-        "command": "extension.copyEditorAll",
-        "override": true
-    },
+  "key": "Ctrl+J",
+  "command": "extension.copyEditorAll",
+  "override": true
+},
 {
-        "key": "",
-        "command": "extension.contractScriptTag",
-        "override": true
-    },
+  "key": "",
+  "command": "extension.contractScriptTag",
+  "override": true
+},
 {
-        "key": "",
-        "command": "extension.contractNoScriptTag",
-        "override": true
-    },
+  "key": "",
+  "command": "extension.contractNoScriptTag",
+  "override": true
+},
 {
-        "key": "",
-        "command": "extension.contractStyleTag",
-        "override": true
-    },
+  "key": "",
+  "command": "extension.contractStyleTag",
+  "override": true
+},
 ```
 
- 
+
  <git-talk/> 
- 
+
