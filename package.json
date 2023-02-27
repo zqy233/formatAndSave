@@ -1,165 +1,4 @@
 {
-  "id": "zqy-formatAndSave",
-  "name": "formatAndSave",
-  "description": "1.一键格式化与保存，2.html和css中嵌套注释，3.快速选中双引号区域，4.生成块注释`/** */`，5.使用vscode打开所在目录，6.vue文件双分栏模式且自动折叠",
-  "displayName": "formatAndSave",
-  "version": "0.0.13",
-  "publisher": "zqy",
-  "engines": {
-    "HBuilderX": "^2.7.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "main": "./extension",
-  "activationEvents": [
-    "onCommand:extension.formatAndSave",
-    "onCommand:extension.foldAllExpandAndCopyEditor",
-    "onCommand:extension.copyEditorAll",
-    "onCommand:extension.contractScriptTag",
-    "onCommand:extension.contractNoScriptTag",
-    "onCommand:extension.contractStyleTag",
-    "onCommand:extension.jumpLastQuote",
-    "onCommand:extension.jumpNextQuote",
-    "onCommand:extension.openWithVscode",
-    "onCommand:extension.blockComment",
-    "onCommand:extension.powerfulComment",
-    "onCommand:extension.prettier"
-  ],
-  "contributes": {
-    "commands": [{
-        "command": "extension.formatAndSave",
-        "title": "重排代码格式并保存"
-      },
-      {
-        "command": "extension.foldAllExpandAndCopyEditor",
-        "title": "无折叠模式"
-      },
-      {
-        "command": "extension.copyEditorAll",
-        "title": "左分栏不折叠，右分栏则创建三次，分别显示template、script、style标签"
-      },
-      {
-        "command": "extension.contractScriptTag",
-        "title": "左分栏显示template、style标签，右分栏显示script标签"
-      },
-      {
-        "command": "extension.contractNoScriptTag",
-        "title": "左分栏显示script标签，右分栏显示template、style标签"
-      },
-      {
-        "command": "extension.contractStyleTag",
-        "title": "左分栏显示template、script标签，右分栏显示style标签"
-      },
-      {
-        "command": "extension.jumpLastQuote",
-        "title": "跳往上一个引号区域"
-      },
-      {
-        "command": "extension.jumpNextQuote",
-        "title": "跳往下一个引号区域"
-      },
-      {
-        "command": "extension.openWithVscode",
-        "title": "使用vscode打开所在目录"
-      },
-      {
-        "command": "extension.blockComment",
-        "title": "块注释/** */"
-      },
-      {
-        "command": "extension.powerfulComment",
-        "title": "嵌套注释"
-      },
-      {
-        "command": "extension.prettier",
-        "title": "prettier格式化代码"
-      }
-    ],
-    "menus": {
-      "explorer/context": [{
-        "command": "extension.openWithVscode",
-        "group": "openInExplorer",
-        "title": "使用vscode打开所在目录",
-        "when": "explorerResourceCount == 1 && ( explorerResourceIsFolder || explorerResourceIsWorkspaceFolder)"
-      }],
-      "editor/context": [{
-          "command": "extension.formatAndSave",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.prettier",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
-        {
-          "id": "copyEditor",
-          "title": "向右复制分栏并自动折叠",
-          "group": "z_commands"
-        },
-        {
-          "command": "extension.foldAllExpandAndCopyEditor",
-          "group": "copyEditor@1",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.copyEditorAll",
-          "group": "copyEditor@1",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.contractScriptTag",
-          "group": "copyEditor@1",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.contractNoScriptTag",
-          "group": "copyEditor@1",
-          "when": "editorTextFocus"
-        },
-        {
-          "command": "extension.contractStyleTag",
-          "group": "copyEditor@1",
-          "when": "editorTextFocus"
-        }
-      ]
-    },
-    "keybindings": [{
-        "command": "extension.prettier",
-        "key": "Ctrl+S",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.copyEditorAll",
-        "key": "Ctrl+J",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.jumpLastQuote",
-        "key": "Alt+Up",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.jumpNextQuote",
-        "key": "Alt+Down",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.blockComment",
-        "key": "Ctrl+Shift+/",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.powerfulComment",
-        "key": "Ctrl+/",
-        "when": "editorTextFocus"
-      }
-    ]
-  },
-  "extensionDependencies": [
-    "plugin-manager"
-  ],
   "scripts": {
     "docs": "vitepress dev docs --temp",
     "docs:build": "vitepress build docs",
@@ -167,17 +6,14 @@
     "gitalk": "node ./doc-build/addMarkdown.js",
     "clean": "node ./doc-build/delMarkdown.js"
   },
-  "keywords": [],
   "dependencies": {
     "flexsearch": "^0.7.31",
     "gitalk": "^1.8.0",
     "md5": "^2.3.0",
-    "fast-diff": "^1.2.0",
     "vitepress-plugin-search": "1.0.4-alpha.19"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-alpha.45",
-    "prettier": "2.8.4"
+    "vitepress": "1.0.0-alpha.45"
   },
   "pnpm": {
     "peerDependencyRules": {
