@@ -15,6 +15,8 @@
   --vp-c-brand-dimm: rgba(255, 195, 99, 0.08);
   --vp-c-white-mute: #FFF3F0;
   --vp-c-text-dark-3: #141414;
+  /* md行数字母颜色 */
+  --vp-code-line-number-color: #ffffff;
 }
 
 /* CODE BLOCKS */
