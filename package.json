@@ -1,9 +1,9 @@
 {
   "id": "zqy-formatAndSave",
   "name": "formatAndSave",
-  "description": "1.一键格式化与保存，2.html和css中嵌套注释，3.快速选中双引号区域，4.生成块注释`/** */`，5.使用vscode打开所在目录，6.vue文件双分栏模式且自动折叠",
+  "description": "1.prettier格式化（基于根目录配置文件），2.vue文件双分栏模式且自动折叠，3.html和css中嵌套注释，4.使用vscode打开所在目录，5.快速选中双引号区域，6.生成块注释`/** */`",
   "displayName": "formatAndSave",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -13,7 +13,6 @@
   ],
   "main": "./extension",
   "activationEvents": [
-    "onCommand:extension.formatAndSave",
     "onCommand:extension.foldAllExpandAndCopyEditor",
     "onCommand:extension.copyEditorAll",
     "onCommand:extension.contractScriptTag",
@@ -27,10 +26,7 @@
     "onCommand:extension.prettier"
   ],
   "contributes": {
-    "commands": [{
-        "command": "extension.formatAndSave",
-        "title": "重排代码格式并保存"
-      },
+    "commands": [
       {
         "command": "extension.foldAllExpandAndCopyEditor",
         "title": "无折叠模式"
@@ -77,17 +73,15 @@
       }
     ],
     "menus": {
-      "explorer/context": [{
-        "command": "extension.openWithVscode",
-        "group": "openInExplorer",
-        "title": "使用vscode打开所在目录",
-        "when": "explorerResourceCount == 1 && ( explorerResourceIsFolder || explorerResourceIsWorkspaceFolder)"
-      }],
-      "editor/context": [{
-          "command": "extension.formatAndSave",
-          "group": "z_commands",
-          "when": "editorTextFocus"
-        },
+      "explorer/context": [
+        {
+          "command": "extension.openWithVscode",
+          "group": "openInExplorer",
+          "title": "使用vscode打开所在目录",
+          "when": "explorerResourceCount == 1 && ( explorerResourceIsFolder || explorerResourceIsWorkspaceFolder)"
+        }
+      ],
+      "editor/context": [
         {
           "command": "extension.prettier",
           "group": "z_commands",
@@ -125,7 +119,8 @@
         }
       ]
     },
-    "keybindings": [{
+    "keybindings": [
+      {
         "command": "extension.prettier",
         "key": "Ctrl+S",
         "when": "editorTextFocus"
@@ -160,34 +155,12 @@
   "extensionDependencies": [
     "plugin-manager"
   ],
-  "scripts": {
-    "docs": "vitepress dev docs --temp",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
-    "gitalk": "node ./doc-build/addMarkdown.js",
-    "clean": "node ./doc-build/delMarkdown.js"
-  },
   "keywords": [],
   "dependencies": {
-    "flexsearch": "^0.7.31",
-    "gitalk": "^1.8.0",
-    "md5": "^2.3.0",
-    "fast-diff": "^1.2.0",
-    "vitepress-plugin-search": "1.0.4-alpha.19"
+    "fast-diff": "^1.2.0"
   },
   "devDependencies": {
-    "vitepress": "1.0.0-alpha.45",
     "prettier": "2.8.4"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "vue",
-        "react",
-        "react-dom",
-        "@algolia/client-search"
-      ]
-    }
   },
   "license": "MIT"
 }
