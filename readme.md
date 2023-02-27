@@ -1,10 +1,14 @@
 ## [官方文档](https://zqy233.github.io/formatAndSave/)(列举插件所有快捷键名与快捷按键，可自行更改)
 
 > 如果更新本插件的版本后出现命令重复的情况，重启下 HBuilderX 应该就可解决
+>
+> 插件完全开源，如果觉得插件对您有所帮助，可以在[github](https://github.com/zqy233/formatAndSave)上点上一颗小星星（star）
 
 ## ✨ 功能 1 prettier格式化(测试中)
 
 基于prettier最新版本@2.8.4，支持prettier最新配置
+
+感谢`DCloud-HX-WKP`在开发过程中提供了所遇问题的解决方案
 
 ### 旧版本(0.0.14 之前)`formatAndSave`命令迁移
 
