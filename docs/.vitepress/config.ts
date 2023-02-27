@@ -114,8 +114,8 @@ export default defineConfig({
           text: '功能',
           items: [
             {
-              text: '一键格式化与保存',
-              link: '/guide/formatAndSave',
+              text: 'prettier格式化',
+              link: '/guide/prettier',
             },
             {
               text: '嵌套注释',
