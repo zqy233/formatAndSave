@@ -1,16 +1,24 @@
-## [官方文档](https://zqy233.github.io/formatAndSave/)
+## [官方文档](https://zqy233.github.io/formatAndSave/)(列举插件所有快捷键名与快捷按键，可自行更改)
 
-> [https://zqy233.github.io/formatAndSave/](https://zqy233.github.io/formatAndSave/)
->
 > 如果更新本插件的版本后出现命令重复的情况，重启下 HBuilderX 应该就可解决
 
 ## ✨ 功能 1 prettier格式化(测试中)
 
 基于prettier最新版本@2.8.4，支持prettier最新配置
 
-### 旧版本(0.0.14之前)formatAndSave命令迁移
+### 旧版本(0.0.14 之前)`formatAndSave`命令迁移
 
-如果使用的是旧版本的`formatAndSave`命令，工具>自定义快捷键>删除`formatAndSave`命令ctrl+s配置，按下`ctrl+s`设置`以后只选一个`为`prettier格式化代码`
+1. 如果使用的是旧版本的`formatAndSave`命令，HBuilderX 上方菜单>工具>自定义快捷键>删除以下代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.formatAndSave","override":true }
+   ```
+
+2. 任意文件中按下`ctrl+s`设置`以后只选一个`为`prettier格式化代码`，工具>自定义快捷键>将会自动生成下方代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.prettier","override":true }
+   ```
 
 ### 用法
 
@@ -61,46 +69,6 @@ HBuilderX插件开发提供了保存事件`onWillSaveTextDocument`，为什么�
 
 - 只在左侧分栏中使用分栏命令，右侧分栏中使用分栏命令会在右侧创建新的分栏
 - 保存当前标签卡，则所有相同的标签卡都会保存，这时聚焦到右侧分栏，使用 HBuilderX 的命令`关闭所有已保存标签卡`，即可快速关闭分栏（如果右侧分栏的标签卡都保存了）
-
-### 自行设置快捷键
-
-HBuilderX 上方菜单>工具>自定义快捷键>右侧加入下方代码并自行配置快捷键即可
-
-对应的 command 名称：
-
-- `foldAllExpandAndCopyEditor` 无折叠模式
-- `copyEditorAll` 左分栏不折叠，右分栏则复制三次标签卡，并分别显示 template、script、style 标签
-- `contractScriptTag` 左分栏显示 template、style 标签，右分栏显示 script 标签
-- `contractNoScriptTag` 左分栏显示 script 标签，右分栏显示 template、style 标签
-- `contractStyleTag` 左分栏显示 template、script 标签，右分栏显示 style 标签
-
-```json
-{
-        "key": "",
-        "command": "extension.foldAllExpandAndCopyEditor",
-        "override": true
-    },
-{
-        "key": "Ctrl+J",
-        "command": "extension.copyEditorAll",
-        "override": true
-    },
-{
-        "key": "",
-        "command": "extension.contractScriptTag",
-        "override": true
-    },
-{
-        "key": "",
-        "command": "extension.contractNoScriptTag",
-        "override": true
-    },
-{
-        "key": "",
-        "command": "extension.contractStyleTag",
-        "override": true
-    },
-```
 
 ## ✨ 功能 3 html 和 css 中嵌套注释
 
