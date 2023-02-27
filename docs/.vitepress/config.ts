@@ -52,9 +52,9 @@ export default defineConfig({
         text: '指南',
         items: [
           {
-            text: '一键格式化与保存',
-            link: '/guide/formatAndSave',
-            activeMatch: '/guide/formatAndSave',
+            text: 'prettier格式化',
+            link: '/guide/prettier',
+            activeMatch: '/guide/prettier',
           },
           {
             text: '嵌套注释',
