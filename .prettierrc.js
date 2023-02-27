@@ -5,7 +5,7 @@ module.exports = {
   // 指定每个缩进级别的空格数<int>，默认2
   tabWidth: 2,
 
-  // 用制表符而不是空格缩进行<bool>，默认false
+  // 用制表符而不是空格缩进<bool>，默认false
   useTabs: false,
 
   // 在语句末尾添加分号<bool>，默认true
@@ -32,7 +32,7 @@ module.exports = {
   // 对象字面量中括号之间的空格<bool>，默认true
   bracketSpacing: true,
 
-  // 将>多行 HTML（HTML、JSX、Vue、Angular）元素放在最后一行的末尾，而不是单独放在下一行（不适用于自关闭元素）<bool>，默认false
+  // 将>放在多行 HTML（HTML、JSX、Vue、Angular）元素最后一行的末尾，而不是单独放在下一行（不适用于自关闭元素）<bool>，默认false
   // true：
   // <button
   //   className="prettier-class"
@@ -58,7 +58,7 @@ module.exports = {
   // Prettier 可以限制自己只格式化在文件顶部包含特殊注释（称为 pragma）的文件。这在逐渐将大型、未格式化的代码库过渡到 Prettier 时非常有用<bool>，默认false
   requirePragma: false,
 
-  // Prettier可以在文件的顶部插入一个 @format的特殊注释，以表明改文件已经被Prettier格式化过了。在使用 --require-pragma参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上@format标记<bool>，默认false
+  // Prettier可以在文件的顶部插入一个 @format 的特殊注释，以表明该文件已经被Prettier格式化过了。在使用 --require-pragma 参数处理一连串的文件时这个功能将十分有用。如果文件顶部已经有一个doclock，这个选项将新建一行注释，并打上 @format 标记<bool>，默认false
   insertPragma: false,
 
   // 超过最大宽度是否换行<always|never|preserve>，默认preserve
