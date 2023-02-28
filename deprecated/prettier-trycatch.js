@@ -3,7 +3,6 @@ const prettier = require('prettier');
 const diff = require('fast-diff');
 const fs = require('fs/promises');
 const path = require('path');
-const to = require('await-to-js').default;
 
 const extensionPrettier = hx.commands.registerCommand(
   'extension.prettier',
@@ -17,18 +16,20 @@ const extensionPrettier = hx.commands.registerCommand(
     // 根据当前文件路径获取所在项目目录信息
     const workspaceFolder = await hx.workspace.getWorkspaceFolder(fileName);
     // prettier查询当前项目根目录是否存在配置文件
-    let [resolveConfigFileErr, configFilePath] = await to(
-      prettier.resolveConfigFile(workspaceFolder.uri.fsPath)
-    );
-    if (resolveConfigFileErr) {
+    let configFilePath = '';
+    try {
+      configFilePath = await prettier.resolveConfigFile(
+        workspaceFolder.uri.fsPath
+      );
+    } catch (err) {
       return hx.window.showErrorMessage(
-        'formatAndSave查找prettier配置文件出错：' + resolveConfigFileErr + '\n'
+        'formatAndSave查找prettier配置文件出错：' + err + '\n'
       );
     }
     // 未找到配置文件则返回null，使用插件的prettier配置文件进行创建
     if (!configFilePath) {
-      const [readFileErr, defaultConfig] = await to(
-        fs.readFile(
+      try {
+        const defaultConfig = await fs.readFile(
           path.resolve(
             hx.env.appRoot,
             'plugins',
@@ -38,43 +39,38 @@ const extensionPrettier = hx.commands.registerCommand(
           {
             encoding: 'utf-8',
           }
-        )
-      );
-      if (readFileErr) {
+        );
+        try {
+          await fs.writeFile(
+            path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js'),
+            defaultConfig
+          );
+          hx.window.showInformationMessage(
+            'formatAndSave创建prettier配置文件成功，文件路径： ' +
+            path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js') + '\n'
+          );
+        } catch (err) {
+          return hx.window.showErrorMessage(
+            'formatAndSave创建prettier配置文件出错 ' + err + '\n'
+          );
+        }
+        configFilePath = path.resolve(__dirname, '.prettierrc.js');
+      } catch (error) {
         return hx.window.showErrorMessage(
-          'formatAndSave查找默认prettier配置文件出错 ' + readFileErr + '\n'
+          'formatAndSave查找默认prettier配置文件出错 ' + error + '\n'
         );
       }
-      const [writeFileErr] = await to(
-        fs.writeFile(
-          path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js'),
-          defaultConfig
-        )
-      );
-      if (writeFileErr) {
-        return hx.window.showErrorMessage(
-          'formatAndSave创建prettier配置文件出错' + writeFileErr + '\n'
-        );
-      }
-      configFilePath = path.resolve(__dirname, '.prettierrc.js');
-      hx.window.showInformationMessage(
-        'formatAndSave创建prettier配置文件成功，文件路径：' +
-        configFilePath +
-        '\n'
-      );
     }
     // 解析配置文件信息为js对象
     prettier.clearConfigCache();
-    const [resolveConfigErr, options] = await to(
-      prettier.resolveConfig(configFilePath)
-    );
-    if (resolveConfigErr) {
-      return hx.window.showErrorMessage(
-        'prettier解析配置文件出错：' + resolveConfigErr + '\n'
-      );
+    let options = {};
+    let formatted = '';
+    try {
+      options = await prettier.resolveConfig(configFilePath);
+    } catch (err) {
+      return hx.window.showErrorMessage('prettier解析配置文件出错：' + err + '\n');
     }
     const text = document.getText();
-    let formatted = '';
     try {
       formatted = await prettier.format(text, {
         filepath: fileName,

@@ -71,7 +71,7 @@ module.exports = {
   // css-遵循CSS属性的默认值
   // strict-所有标签周围的空格（或缺少空格）被认为是重要的
   // ignore-所有标签周围的空格（或缺少空格）被认为是无关紧要的
-  htmlWhitespaceSensitivity: 'css',
+  htmlWhitespaceSensitivity: 'ignore',
 
   // vue文件script和style标签中是否缩进<bool>，默认false
   vueIndentScriptAndStyle: false,
@@ -85,5 +85,5 @@ module.exports = {
   embeddedLanguageFormatting: 'auto',
 
   // 在 HTML、Vue 和 JSX 中强制执行每行单个属性<bool>，默认false
-  singleAttributePerLine: true
+  singleAttributePerLine: true,
 };
