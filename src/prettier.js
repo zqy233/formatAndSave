@@ -45,9 +45,10 @@ const extensionPrettier = hx.commands.registerCommand(
           'formatAndSave查找默认prettier配置文件出错 ' + readFileErr + '\n'
         );
       }
+      const writeConfigFilePath = path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js')
       const [writeFileErr] = await to(
         fs.writeFile(
-          path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js'),
+          writeConfigFilePath,
           defaultConfig
         )
       );
@@ -56,7 +57,7 @@ const extensionPrettier = hx.commands.registerCommand(
           'formatAndSave创建prettier配置文件出错' + writeFileErr + '\n'
         );
       }
-      configFilePath = path.resolve(__dirname, '.prettierrc.js');
+      configFilePath = writeConfigFilePath;
       hx.window.showInformationMessage(
         'formatAndSave创建prettier配置文件成功，文件路径：' +
         configFilePath +
