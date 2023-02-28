@@ -10,20 +10,6 @@
 
 感谢`DCloud-HX-WKP`在开发过程中提供了所遇问题的解决方案
 
-### 旧版本(0.0.14 之前)`formatAndSave`命令迁移
-
-1. 如果使用的是旧版本的`formatAndSave`命令，HBuilderX 上方菜单>工具>自定义快捷键>删除以下代码
-
-   ```json
-   {"key":"ctrl+s","command":"extension.formatAndSave","override":true }
-   ```
-
-2. 任意文件中按下`ctrl+s`设置`以后只选一个`为`prettier格式化代码`，工具>自定义快捷键>将会自动生成下方代码
-
-   ```json
-   {"key":"ctrl+s","command":"extension.prettier","override":true }
-   ```
-
 ### 用法
 
 1. 避免与官方格式化冲突：工具>设置>编辑器设置>取消勾选保存时自动格式化
@@ -40,6 +26,20 @@
 HBuilderX插件开发提供了保存事件`onWillSaveTextDocument`，为什么不使用该事件触发格式化，而是创建一个`ctrl+s`命令来替换HBuilderX默认保存命令？
 
 因为该事件只有编辑后保存才会触发，文件未发生更改情况下不会触发
+
+### 旧版本(0.0.14 之前)`formatAndSave`命令迁移
+
+1. 如果使用的是旧版本的`formatAndSave`命令，HBuilderX 上方菜单>工具>自定义快捷键>删除以下代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.formatAndSave","override":true }
+   ```
+
+2. 任意文件中按下`ctrl+s`设置`以后只选一个`为`prettier格式化代码`，工具>自定义快捷键>将会自动生成下方代码
+
+   ```json
+   {"key":"ctrl+s","command":"extension.prettier","override":true }
+   ```
 
 ## ✨ 功能 2 vue 文件双分栏模式且自动折叠
 
