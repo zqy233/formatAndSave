@@ -3,7 +3,7 @@
   "name": "formatAndSave",
   "description": "1.prettier格式化（基于根目录配置文件），2.vue文件双分栏模式且自动折叠，3.html和css中嵌套注释，4.使用vscode打开所在目录，5.快速选中双引号区域，6.生成块注释`/** */`",
   "displayName": "formatAndSave",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
