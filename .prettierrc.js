@@ -86,4 +86,9 @@ module.exports = {
 
   // 在 HTML、Vue 和 JSX 中强制执行每行单个属性<bool>，默认false
   singleAttributePerLine: true,
+
+  // 手动指定prettier使用的parser
+  parsers: {
+    nvue: 'vue',
+  },
 };

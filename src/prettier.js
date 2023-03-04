@@ -16,13 +16,14 @@ const extensionPrettier = hx.commands.registerCommand(
     const { fileName } = document;
     // 根据当前文件路径获取所在项目目录信息
     const workspaceFolder = await hx.workspace.getWorkspaceFolder(fileName);
+    const workspaceFolderPath = workspaceFolder.uri.fsPath;
     // prettier查询当前项目根目录是否存在配置文件
     let [resolveConfigFileErr, configFilePath] = await to(
-      prettier.resolveConfigFile(workspaceFolder.uri.fsPath)
+      prettier.resolveConfigFile(workspaceFolderPath)
     );
     if (resolveConfigFileErr) {
       return hx.window.showErrorMessage(
-        'formatAndSave查找prettier配置文件出错：' + resolveConfigFileErr + '\n'
+        'prettier查找配置文件出错：' + resolveConfigFileErr + '\n'
       );
     }
     // 未找到配置文件则返回null，使用插件的prettier配置文件进行创建
@@ -42,49 +43,88 @@ const extensionPrettier = hx.commands.registerCommand(
       );
       if (readFileErr) {
         return hx.window.showErrorMessage(
-          'formatAndSave查找默认prettier配置文件出错 ' + readFileErr + '\n'
+          '查找默认prettier配置文件出错 ' + readFileErr + '\n'
         );
       }
-      const writeConfigFilePath = path.resolve(workspaceFolder.uri.fsPath, '.prettierrc.js')
+      const writeConfigFilePath = path.resolve(
+        workspaceFolderPath,
+        '.prettierrc.js'
+      );
       const [writeFileErr] = await to(
-        fs.writeFile(
-          writeConfigFilePath,
-          defaultConfig
-        )
+        fs.writeFile(writeConfigFilePath, defaultConfig)
       );
       if (writeFileErr) {
         return hx.window.showErrorMessage(
-          'formatAndSave创建prettier配置文件出错' + writeFileErr + '\n'
+          '创建prettier配置文件出错' + writeFileErr + '\n'
         );
       }
       configFilePath = writeConfigFilePath;
       hx.window.showInformationMessage(
-        'formatAndSave创建prettier配置文件成功，文件路径：' +
-        configFilePath +
-        '\n'
+        '创建prettier配置文件成功，文件路径：' + configFilePath + '\n'
       );
     }
-    // 解析配置文件信息为js对象
-    prettier.clearConfigCache();
+    // 解析配置文件信息
+    // useCache为false，相当于prettier.clearConfigCache()
     const [resolveConfigErr, options] = await to(
-      prettier.resolveConfig(configFilePath)
+      prettier.resolveConfig(configFilePath, {
+        editorconfig: true,
+        useCache: false,
+      })
     );
     if (resolveConfigErr) {
       return hx.window.showErrorMessage(
         'prettier解析配置文件出错：' + resolveConfigErr + '\n'
       );
     }
+    // 如存在.prettierignore文件，且当前文件被忽略，则不进行格式化
+    const ignorePath = path.resolve(workspaceFolderPath, '.prettierignore');
+    const [noIgnoreFile] = await to(fs.access(ignorePath, fs.constants.F_OK));
+    let fileInfoOptions = {};
+    if (!noIgnoreFile) {
+      fileInfoOptions = {
+        ignorePath,
+      };
+    }
+    const info = await prettier.getFileInfo(fileName, fileInfoOptions);
+    if (info.ignored) {
+      return hx.window.setStatusBarMessage(
+        '当前文件已在.prettierignore中忽视',
+        5000,
+        'info'
+      );
+    }
+    const formatOptions = {
+      filepath: fileName,
+      ...options,
+    };
+    // 使用配置文件中指定的parser，如'nvue':'vue'
+    const pathParse = path.parse(fileName);
+    let extname = '';
+    // .prettierignore这种文件名，ext属性为空，需要使用name
+    if (pathParse.ext) {
+      extname = pathParse.ext.replace('.', '');
+    } else {
+      extname = pathParse.name.replace('.', '');
+    }
+    if (options.parsers && options.parsers[extname]) {
+      formatOptions['parser'] = options.parsers[extname];
+    }
     const text = document.getText();
     let formatted = '';
     try {
-      formatted = await prettier.format(text, {
-        filepath: fileName,
-        ...options,
-      });
+      formatted = prettier.format(text, formatOptions);
     } catch (err) {
+      // 如果是常见错误:不识别的文件类型，用状态栏显示报错
+      const errMsg = JSON.stringify(err, Object.getOwnPropertyNames(err), 2);
+      if (errMsg.includes('No parser could be inferred for file'))
+        return hx.window.setStatusBarMessage(
+          'prettier不支持该当前文件格式化',
+          5000,
+          'info'
+        );
       return hx.window.showErrorMessage('prettier格式化出错：' + err + '\n');
     }
-    if (!formatted) return
+    if (!formatted) return;
     const diffText = [];
     let index = 0;
     const diffs = diff(text, formatted);
