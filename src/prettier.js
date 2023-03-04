@@ -76,14 +76,25 @@ const extensionPrettier = hx.commands.registerCommand(
         'prettier解析配置文件出错：' + resolveConfigErr + '\n'
       );
     }
-    // 如存在.prettierignore文件，且当前文件被忽略，则不进行格式化
+    // .prettierignore文件中设置文件不进行格式化
     const ignorePath = path.resolve(workspaceFolderPath, '.prettierignore');
     const [noIgnoreFile] = await to(fs.access(ignorePath, fs.constants.F_OK));
-    let fileInfoOptions = {};
-    if (!noIgnoreFile) {
-      fileInfoOptions = {
-        ignorePath,
-      };
+    let fileInfoOptions = {
+      ignorePath,
+    };
+    // 没有.prettierignore就创建.prettierignore文件
+    if (noIgnoreFile) {
+      const [writeFileErr] = await to(fs.writeFile(ignorePath, `uni_modules`));
+      if (writeFileErr) {
+        hx.window.showErrorMessage(
+          '创建.prettierignore文件出错' + writeFileErr + '\n'
+        );
+        fileInfoOptions = {};
+      } else {
+        hx.window.showInformationMessage(
+          '创建.prettierignore文件成功，文件路径：' + ignorePath + '\n'
+        );
+      }
     }
     const info = await prettier.getFileInfo(fileName, fileInfoOptions);
     if (info.ignored) {
@@ -97,14 +108,18 @@ const extensionPrettier = hx.commands.registerCommand(
       filepath: fileName,
       ...options,
     };
-    // 使用配置文件中指定的parser，如'nvue':'vue'
+    // 使用配置文件中指定的parser
     const pathParse = path.parse(fileName);
     let extname = '';
-    // .prettierignore这种文件名，ext属性为空，需要使用name
+    // 如.prettierignore这类文件名，ext属性为空，需要使用name
     if (pathParse.ext) {
       extname = pathParse.ext.replace('.', '');
     } else {
       extname = pathParse.name.replace('.', '');
+    }
+    // 指定nvue的parser
+    if (extname === 'nvue') {
+      formatOptions['parser'] = 'vue';
     }
     if (options.parsers && options.parsers[extname]) {
       formatOptions['parser'] = options.parsers[extname];
