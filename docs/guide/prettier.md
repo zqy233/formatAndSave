@@ -11,33 +11,65 @@
 ## 用法
 
 1. 避免与官方格式化冲突：工具>设置>编辑器设置>取消勾选保存时自动格式化
-2. 插件提供一个`ctrl+s`命令，名为`prettier格式化代码`，与 HBuilderX 默认保存命令重复，此时按下`ctrl+s`会出现选择菜单，设置`以后只选一个`为`prettier格式化代码`即可
-3. 在任意文件中`ctrl+s`，插件会获取该文件所在项目目录，判断项目根目录下是否存在 prettier 配置文件，如果不存在，则会创建默认 prettier 配置文件（js 配置文件）
-4. 如果不想使用插件创建的配置文件，比如之前已有统一团队风格的 prettier 配置文件，可以复制该文件到项目根目录下，插件则不会新建，而是直接使用该配置文件（配置文件无固定后缀名要求，属于 prettier 配置文件即可）
+2. 插件提供一个`ctrl+s`命令，名为`prettier格式化代码`，与 HBuilderX 默认保存命令重复，在任意文件中按下`ctrl+s`会出现选择菜单，设置`以后只选一个`为`prettier格式化代码`
+3. 接下来就直接使用`ctrl+s`就可以了，会使用 prettier 格式化代码并在格式化后保存
+
+## 插件如何工作
+
+1. 在任意文件中`ctrl+s`，插件会获取该文件所在项目目录，判断项目根目录下是否存在 prettier 配置文件、是否存在 prettier 格式化的忽略文件`.prettierignore`，如果不存在，则会在根目录创建默认的`.prettierrc.js`和`.prettierignore`，插件会基于这两个文件进行格式化
+2. 因为是基于配置文件格式化，所以允许不同项目之间配置文件配置不同，进行不同配置的格式化，互不影响
+3. 如果不想使用插件创建的配置文件，比如之前已有统一团队风格的 prettier 配置文件，可以复制该文件到项目根目录下，插件则不会新建，而是直接使用该配置文件（配置文件无固定后缀名要求，属于 prettier 配置文件即可）
+4. 如果所要格式化的文件不在 HBuilderX 左侧目录的项目中，会使用 prettier 默认配置进行格式化
 
 ## 与官方 prettier 插件的区别：
 
 官方的 prettier 不支持使用根目录 prettier 配置文件，不方便团队统一风格
 
+## `.prettierignore`忽略文件
+
+`.prettierignore`指定哪些文件或文件目录忽略 prettier 的格式化
+
+插件默认生成的`.prettierignore`内容是`uni_modules`，表示该目录下的所有文件 prettier 会忽略，在这些文件中`ctrl+s`不会进行格式化
+
+## prettier 转换.editorconfig 配置
+
+> 插件支持.editorconfig 转换：prettier 会转换.editorconfig 的一些配置属性为 prettier 相应的配置属性
+
+目前 prettier 支持转换的.editorconfig 配置属性
+
+```json
+[*]
+indent_style = space
+indent_size = 4
+max_line_length = 80
+end_of_line = lf
+```
+
+对应转换成的 prettier 配置属性
+
+```js
+{ useTabs: false, tabWidth: 4, printWidth: 80, endOfLine: 'lf' }
+```
+
 ## 配置默认不支持的文件类型的格式化
 
-prettier默认支持  `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 `JSON.stringify`、`JSON`、`JSON with Comments`、`JSON5`、`CSS`、`PostCSS`、`ess`、`SCSS`、`Handlebars`、`GraphQL`、`Markdown`、`MDX`、`Angular`、`HTML`、`Lightning Web Components`、`Vue`、`YAML`
+prettier 默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 `JSON.stringify`、`JSON`、`JSON with Comments`、`JSON5`、`CSS`、`PostCSS`、`ess`、`SCSS`、`Handlebars`、`GraphQL`、`Markdown`、`MDX`、`Angular`、`HTML`、`Lightning Web Components`、`Vue`、`YAML`
 
 ### 安装插件
 
-对于不默认支持格式化的文件类型，需要安装prettier插件，并在配置文件中配置`plugins`属性
+对于不默认支持格式化的文件类型，需要安装 prettier 插件，并在配置文件中配置`plugins`属性
 
-比如想要格式化java和xml文件，使用node安装prettier插件（对应语言插件请查看下方插件列表）
+比如想要格式化 java 和 xml 文件，使用 node 安装 prettier 插件（对应语言插件请查看下方插件列表）
 
 ```js
 npm i -D prettier-plugin-java prettier-plugin-xml
 ```
 
-### plugins支持绝对路径
+### plugins 支持绝对路径
 
-可以使用绝对路径让prettier找到它的插件（可以单独使用一个文件夹存放所有插件，避免重复安装）
+可以使用绝对路径让 prettier 找到它的插件（可以单独使用一个文件夹存放所有插件，避免重复安装）
 
-.prettierrc.js设置如下
+.prettierrc.js 设置如下
 
 ```js
   plugins: [
@@ -48,7 +80,7 @@ npm i -D prettier-plugin-java prettier-plugin-xml
 
 ### 相对路径
 
-.prettierrc.js设置如下
+.prettierrc.js 设置如下
 
 ```js
   plugins: [
@@ -57,7 +89,7 @@ npm i -D prettier-plugin-java prettier-plugin-xml
     ],
 ```
 
-现在prettier可以正常格式化java、xml文件了
+现在 prettier 可以正常格式化 java、xml 文件了
 
 ### 插件列表
 
@@ -116,6 +148,6 @@ HBuilderX 上方菜单>工具>自定义快捷键>更改插件快捷键
 
 HBuilderX 插件开发提供了保存事件`onWillSaveTextDocument`，为什么不使用该事件触发格式化，而是创建一个`ctrl+s`命令来替换 HBuilderX 默认保存命令？
 
-因为该事件只有编辑后保存才会触发，文件未发生更改情况下不会触发 
+因为该事件只有编辑后保存才会触发，文件未发生更改情况下不会触发
 
 <git-talk/>

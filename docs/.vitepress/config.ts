@@ -49,12 +49,17 @@ export default defineConfig({
         activeMatch: '/guide/start',
       },
       {
-        text: '指南',
+        text: '功能',
         items: [
           {
-            text: 'prettier格式化',
+            text: 'prettier格式化(测试中)',
             link: '/guide/prettier',
             activeMatch: '/guide/prettier',
+          },
+          {
+            text: 'vue文件双分栏模式且自动折叠',
+            link: '/guide/copyEditor',
+            activeMatch: '/guide/copyEditor',
           },
           {
             text: '嵌套注释',
@@ -72,14 +77,9 @@ export default defineConfig({
             activeMatch: '/guide/blockComment',
           },
           {
-            text: '使用vscode打开所在目录(待完善)',
+            text: '使用vscode打开所在目录(测试中)',
             link: '/guide/openWithVscode',
             activeMatch: '/guide/openWithVscode',
-          },
-          {
-            text: 'vue文件双分栏模式且自动折叠',
-            link: '/guide/copyEditor',
-            activeMatch: '/guide/copyEditor',
           },
         ],
       },
@@ -114,8 +114,12 @@ export default defineConfig({
           text: '功能',
           items: [
             {
-              text: 'prettier格式化',
+              text: 'prettier格式化(测试中)',
               link: '/guide/prettier',
+            },
+            {
+              text: 'vue文件双分栏模式且自动折叠',
+              link: '/guide/copyEditor',
             },
             {
               text: '嵌套注释',
@@ -130,12 +134,8 @@ export default defineConfig({
               link: '/guide/blockComment',
             },
             {
-              text: '使用vscode打开所在目录(待完善)',
+              text: '使用vscode打开所在目录(测试中)',
               link: '/guide/openWithVscode',
-            },
-            {
-              text: 'vue文件双分栏模式且自动折叠',
-              link: '/guide/copyEditor',
             },
           ],
         },
