@@ -3,7 +3,7 @@ layout: home
 title: HBuilderX插件
 hero:
   name: formatAndSave
-  tagline: HBuilderX插件-主要功能：嵌套注释、vue文件双分栏
+  tagline: HBuilderX插件-主要功能：prettier 格式化、嵌套注释、vue 文件双分栏
   image:
     src: /logo.png
     alt: formatAndSave
