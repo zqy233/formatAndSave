@@ -29,9 +29,7 @@
 
 prettier 默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 `JSON.stringify`、`JSON`、`JSON with Comments`、`JSON5`、`CSS`、`PostCSS`、`ess`、`SCSS`、`Handlebars`、`GraphQL`、`Markdown`、`MDX`、`Angular`、`HTML`、`Lightning Web Components`、`Vue`、`YAML`
 
-#### 安装插件
-
-对于不默认支持格式化的文件类型，需要安装 prettier 插件，并在配置文件中配置`plugins`属性
+对于不默认支持格式化的文件类型，如`java`、`sql`，`xml`等，需要安装 prettier 插件，并在配置文件中配置`plugins`属性
 
 具体步骤请查看[官方文档](https://zqy233.github.io/formatAndSave/guide/prettier.html#%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96)
 
