@@ -128,7 +128,7 @@ npm i -D prettier-plugin-java prettier-plugin-xml
 
 比如后缀名是.jql，但本质上是 js，可以手动指定为 babel
 
-比如后缀名是.nvue，但本质上是 vue，可以手动指定为 vue（这里仅做示例，插件已内置，无需在配置文件加入）
+比如后缀名是.nvue，但本质上是 vue，可以手动指定为 vue（这里仅做示例，nvue 的 parser 插件已内置，无需在配置文件加入）
 
 ```json
   "parsers": {
