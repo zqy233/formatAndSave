@@ -8,24 +8,38 @@
 
 基于 prettier 最新版本@2.8.4 实现，感谢`DCloud-HX-WKP`在开发过程中提供了所遇问题的解决方案
 
+### 用法
+
+1. 避免与官方格式化冲突：工具>设置>编辑器设置>取消勾选保存时自动格式化
+2. 插件提供一个`ctrl+s`命令，名为`prettier格式化代码`，与 HBuilderX 默认保存命令重复，在任意文件中按下`ctrl+s`会出现选择菜单，设置`以后只选一个`为`prettier格式化代码`
+3. 接下来就在文件中使用`ctrl+s`就可以了，会使用 prettier 格式化代码并在格式化后保存
+
+### 插件如何工作
+
+1. 在任意文件中`ctrl+s`，插件会获取该文件所在项目目录，判断项目根目录下是否存在 prettier 配置文件、是否存在 prettier 格式化的忽略文件`.prettierignore`，如果不存在，则会在根目录创建默认的`.prettierrc.js`和`.prettierignore`，插件会基于这两个文件进行格式化
+2. 因为是基于配置文件格式化，所以允许不同项目之间配置文件配置不同，进行不同配置的格式化，互不影响
+3. 如果不想使用插件创建的配置文件，比如之前已有统一团队风格的 prettier 配置文件，可以复制该文件到项目根目录下，插件则不会新建，而是直接使用该配置文件（配置文件无固定后缀名要求，属于 prettier 配置文件即可）
+4. 如果所要格式化的文件不在 HBuilderX 左侧目录的项目中，会使用 prettier 默认配置进行格式化
+
 ### 与官方 prettier 插件的区别：
 
 官方的 prettier 不支持使用根目录 prettier 配置文件，不方便团队统一风格
 
-### 用法
-
-1. 避免与官方格式化冲突：工具>设置>编辑器设置>取消勾选保存时自动格式化
-2. 插件提供一个`ctrl+s`命令，名为`prettier格式化代码`，与 HBuilderX 默认保存命令重复，此时按下`ctrl+s`会出现选择菜单，设置`以后只选一个`为`prettier格式化代码`即可
-3. 在任意文件中`ctrl+s`，插件会获取该文件所在项目目录，判断项目根目录下是否存在 prettier 配置文件，如果不存在，则会创建默认 prettier 配置文件（js 配置文件）
-4. 如果不想使用插件创建的配置文件，比如之前已有统一团队风格的 prettier 配置文件，可以复制该文件到项目根目录下，插件则不会新建，而是直接使用该配置文件（配置文件无固定后缀名要求，属于 prettier 配置文件即可）
-
 ### 配置默认不支持的文件类型的格式化
 
-prettier默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 `JSON.stringify`、`JSON`、`JSON with Comments`、`JSON5`、`CSS`、`PostCSS`、`ess`、`SCSS`、`Handlebars`、`GraphQL`、`Markdown`、`MDX`、`Angular`、`HTML`、`Lightning Web Components`、`Vue`、`YAML`
+prettier 默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 `JSON.stringify`、`JSON`、`JSON with Comments`、`JSON5`、`CSS`、`PostCSS`、`ess`、`SCSS`、`Handlebars`、`GraphQL`、`Markdown`、`MDX`、`Angular`、`HTML`、`Lightning Web Components`、`Vue`、`YAML`
 
-### 安装插件
+#### 安装插件
 
-对于不默认支持格式化的文件类型，如`java`、`xml`、`sql`等文件，需要安装prettier插件，并在配置文件中配置`plugins`属性，具体内容请查看（[官方文档插件配置相关章节](https://zqy233.github.io/formatAndSave/guide/prettier.html#%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96)）
+对于不默认支持格式化的文件类型，需要安装 prettier 插件，并在配置文件中配置`plugins`属性
+
+具体步骤请查看[官方文档](https://zqy233.github.io/formatAndSave/guide/prettier.html#%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E4%B8%8D%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96)
+
+### `.prettierignore`忽略文件
+
+`.prettierignore`指定哪些文件或文件目录忽略 prettier 的格式化
+
+插件默认生成的`.prettierignore`内容是`uni_modules`，表示该目录下的所有文件 prettier 会忽略，在这些文件中`ctrl+s`不会进行格式化
 
 ### 旧版本(0.0.14 之前)`formatAndSave`命令迁移
 
@@ -45,9 +59,11 @@ prettier默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、 
 
 > 很多时候滚动是不方便的，尤其是 vue 文件需要对照 template 和 script 标签或者对照 template 和 style 标签的时候，这时候就需要分栏，比较常用的还是双分栏，左右对照
 >
-> 本插件提供右键菜单和快捷键的方式，快速进行双分栏，并按折叠模式自动折叠 `script` ，`template` 和 `style`标签
+> 本插件提供右键菜单和快捷键的方式，快速进行左右双分栏，并按折叠模式自动折叠 `script` ，`template` 和 `style`标签
 >
 > 当前 vue 文件需要拥有 `script` ，`template` 和 `style` 标签才能体现出效果
+>
+> (0.0.22 版本做了兼容性处理)可以在非 vue 文件中使用该命令，会直接调用 HBuilderX 的`复制标签卡到分栏`命令
 
 ### 用法
 
@@ -74,7 +90,7 @@ vue 文件中右键菜单选择`向右复制分栏并自动折叠`，选择二�
 
 ## ✨ 功能 3 html 和 css 中嵌套注释
 
-> 二次封装注释命令，快捷键仍为`ctrl+/`
+> 二次封装注释命令，快捷键为`ctrl+/`，与 HBuilderX 默认注释命令重复，在任意文件中按下`ctrl+/`会出现选择菜单，设置`以后只选一个`为`嵌套注释`
 
 支持 html 和 css（包括 vue）嵌套注释下进行注释，它会自动判断所有注释区域，然后分段进行相应注释，解开注释也会进行判断，不用一个个选择解开，直接全选多个注释，一键后会进行分段解开注释
 
@@ -118,7 +134,9 @@ fix：顺带修复了，HBuilderX 注释命令开始行和结束行如果不选�
 
 ## ✨ 功能 5 生成块注释`/** */`
 
-> 替换默认的块注释命令，快捷键仍为`ctrl+shift+/`，默认块注释命令生成`/* */`，替换后生成`/** */`，区别是多了一个`*`
+> 用于替换 HBuilderX 默认的块注释命令，快捷键为`ctrl+shift+/`，与 HBuilderX 默认块注释命令重复，在任意文件中按下`ctrl+shift+/`会出现选择菜单，设置`以后只选一个`为`块注释/** */`
+>
+> 默认块注释命令生成`/* */`，替换后生成`/** */`，区别是多了一个`*`
 
 为什么要这样做？因为 `/** */`的块注释写法才能使变量在悬浮或者代码补全时，提供注释说明
 
