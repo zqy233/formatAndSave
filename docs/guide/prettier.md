@@ -124,7 +124,7 @@ npm i -D prettier-plugin-java prettier-plugin-xml
 
 ## 手动指定 prettier 的 parser
 
-对于一些自定义文件的后缀名，本质上属于 prettier 支持的文件类型，可以在 prettier 配置文件中手动指定 parser
+对于一些自定义文件，本质上仍属于 prettier 支持的文件类型，可以在 prettier 配置文件中手动指定 parser
 
 比如后缀名是.jql，但本质上是 js，可以手动指定为 babel
 
