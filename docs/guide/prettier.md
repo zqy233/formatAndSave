@@ -122,6 +122,21 @@ npm i -D prettier-plugin-java prettier-plugin-xml
 - [`prettier-plugin-svelte`](https://github.com/UnwrittenFun/prettier-plugin-svelte) by [**@UnwrittenFun**](https://github.com/UnwrittenFun)
 - [`prettier-plugin-toml`](https://github.com/bd82/toml-tools/tree/master/packages/prettier-plugin-toml) by [**@bd82**](https://github.com/bd82)
 
+## 手动指定 prettier 的 parser
+
+对于一些自定义文件的后缀名，本质上属于 prettier 支持的文件类型，可以在 prettier 配置文件中手动指定 parser
+
+比如后缀名是.jql，但本质上是 js，可以手动指定为 babel
+
+比如后缀名是.nvue，但本质上是 vue，可以手动指定为 vue（这里仅做示例，插件已内置，无需在配置文件加入）
+
+```json
+  "parsers": {
+    ".jql": "babel",
+    ".nvue": "vue"
+  }
+```
+
 ## 自行设置快捷键
 
 HBuilderX 上方菜单>工具>自定义快捷键>更改插件快捷键
