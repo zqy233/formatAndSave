@@ -1,6 +1,6 @@
 # 🎉formatAndSave
 
-> HBuilderX 插件-主要功能：prettier 格式化、嵌套注释、vue 文件双分栏
+> HBuilderX 插件-主要功能：prettier 格式化（项目根目录配置）、嵌套注释、vue 文件双分栏
 >
 > 插件市场 https://ext.dcloud.net.cn/plugin?id=7695
 >
