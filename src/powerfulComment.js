@@ -30,7 +30,7 @@ function comment(selection, document, activeEditor) {
     // 结束位置=行结束位置-\t\n
     const end = startAndEndLine[1].end - matchReg2[0].length;
 
-    // 单击，则直接调用命令
+    // 单击，则直接调用注释命令
     if (originStart === originEnd) {
       await hx.commands.executeCommand('editor.action.commentLine');
       return resolve();
@@ -264,6 +264,6 @@ async function commentPositionsDeal(
       );
     }
   }
-  await hx.commands.executeCommand('editor.action.commentLine'); // 调用注释命令
+  await hx.commands.executeCommand('editor.action.commentLine'); 
   activeEditor.setSelection(start, end); // 恢复光标位置
 }
