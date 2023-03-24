@@ -17,10 +17,10 @@ let index = 0;
 const jumpLastQuote = hx.commands.registerCommand(
   'extension.jumpLastQuote',
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-    const word = activeEditor.document.getText(); // 当前编辑器的所有文本
+    let activeEditor = await hx.window.getActiveTextEditor(); 
+    const word = activeEditor.document.getText(); 
     const positions = getAllIndex(word, '"');
-    const cursorPosition = activeEditor.selection.active; // 光标所在位置
+    const cursorPosition = activeEditor.selection.active; 
     for (let i = 0; i < positions.length; i++) {
       if (positions[i] < cursorPosition && positions[i + 1] > cursorPosition) {
         // 偶数说明在内侧，奇数说明在外侧
@@ -45,8 +45,8 @@ const jumpLastQuote = hx.commands.registerCommand(
 const jumpNextQuote = hx.commands.registerCommand(
   'extension.jumpNextQuote',
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-    const word = activeEditor.document.getText(); // 当前编辑器的所有文本
+    let activeEditor = await hx.window.getActiveTextEditor(); 
+    const word = activeEditor.document.getText(); 
     const positions = getAllIndex(word, '"');
     const cursorPosition = activeEditor.selection.active;
     for (let i = 0; i < positions.length; i++) {
