@@ -2,7 +2,7 @@
 
 ::: tip
 
-基于 prettier 最新版本@2.8.6，支持 prettier 最新配置
+基于 prettier 最新版本@2.8.6，支持 prettier 最新配置，读取项目根目录配置文件，便于团队统一风格
 
 感谢 DCloud-HX-WKP 在开发过程中提供了所遇问题的解决方案
 
