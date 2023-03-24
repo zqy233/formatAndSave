@@ -1,32 +1,46 @@
 const hx = require('hbuilderx');
 
+// hx.commands.executeCommand('workbench.action.foldAllExpand'); 
+// 展开所有行
+
+// hx.commands.executeCommand('workbench.action.foldAllContract')
+// 折叠所有行
+
+// hx.commands.executeCommand('workbench.action.foldLineExpand')
+// 展开单行
+
+// hx.commands.executeCommand('workbench.action.copyEditor'); 
+// 复制分栏，会复制左侧光标位置
+
+// hx.commands.executeCommand('cursorRight'); 
+// 光标向右移动，用于触发滚动效果
+
 /** 无折叠模式 */
 const foldAllExpandAndCopyEditor = hx.commands.registerCommand(
   'extension.foldAllExpandAndCopyEditor',
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-    // 非vue文件直接复制分栏
+    let activeEditor = await hx.window.getActiveTextEditor(); 
     if (activeEditor.document.languageId !== 'vue') {
       return hx.commands.executeCommand('workbench.action.copyEditor');
     }
-    await activeEditor.setSelection(0, 0); // 光标选中顶部
-    await hx.commands.executeCommand('workbench.action.foldAllExpand'); // 展开所有行，会复制左侧光标位置
-    await hx.commands.executeCommand('workbench.action.copyEditor'); //  复制分栏
-    await hx.commands.executeCommand('cursorRight'); // 用于触发滚动效果
+    await hx.commands.executeCommand('workbench.action.foldAllExpand'); 
+    await hx.commands.executeCommand('workbench.action.copyEditor'); 
+    await hx.commands.executeCommand('cursorRight'); 
   }
 );
 
 /** 复制分栏并折叠的通用函数 */
 async function copyEditorAndContract(activeEditor, index, tag) {
   if (index !== -1) {
-    await activeEditor.setSelection(index, index); // 选中标签所在行
-    await hx.commands.executeCommand('workbench.action.copyEditor'); //  复制分栏，会复制左侧光标位置
-    await hx.commands.executeCommand('workbench.action.foldAllContract'); // 折叠所有行
-    await hx.commands.executeCommand('workbench.action.foldLineExpand'); // 展开单行
-    await hx.commands.executeCommand('cursorRight'); // 用于触发滚动效果
+    // 选中标签所在行
+    await activeEditor.setSelection(index, index); 
+    await hx.commands.executeCommand('workbench.action.copyEditor'); 
+    await hx.commands.executeCommand('workbench.action.foldAllContract'); 
+    await hx.commands.executeCommand('workbench.action.foldLineExpand'); 
+    await hx.commands.executeCommand('cursorRight'); 
     // 非style标签，则置焦到上一个分栏
     if (tag !== 'style') {
-      await hx.commands.executeCommand('workbench.action.prevpane'); // 置焦到上一个分栏
+      await hx.commands.executeCommand('workbench.action.prevpane'); 
     }
   } else {
     hx.window.setStatusBarMessage(`未找到${tag}标签`, 10000);
@@ -40,16 +54,15 @@ async function copyEditorAndContract(activeEditor, index, tag) {
 const copyEditorAll = hx.commands.registerCommand(
   'extension.copyEditorAll',
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-    // 非vue文件直接复制分栏
+    let activeEditor = await hx.window.getActiveTextEditor(); 
     if (activeEditor.document.languageId !== 'vue') {
       return hx.commands.executeCommand('workbench.action.copyEditor');
     }
-    const word = activeEditor.document.getText(); // 当前编辑器的所有文本
+    const word = activeEditor.document.getText(); 
     const templateIndex = word.indexOf('<template');
     const scriptIndex = word.indexOf('<script');
     const styleIndex = word.indexOf('<style');
-    await hx.commands.executeCommand('workbench.action.foldAllExpand'); // 展开所有行
+    await hx.commands.executeCommand('workbench.action.foldAllExpand'); 
     await copyEditorAndContract(activeEditor, templateIndex, 'template');
     await copyEditorAndContract(activeEditor, scriptIndex, 'script');
     await copyEditorAndContract(activeEditor, styleIndex, 'style');
@@ -58,22 +71,21 @@ const copyEditorAll = hx.commands.registerCommand(
 
 /** 左侧显示两个标签，右侧显示单个标签的通用函数 */
 async function leftTwoTagsAndRightOneTag(tagName) {
-  let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-  // 非vue文件直接复制分栏
+  let activeEditor = await hx.window.getActiveTextEditor(); 
   if (activeEditor.document.languageId !== 'vue') {
     return hx.commands.executeCommand('workbench.action.copyEditor');
   }
-  const word = activeEditor.document.getText(); // 当前编辑器的所有文本
+  const word = activeEditor.document.getText(); 
   const index = word.indexOf('<' + tagName);
-  await hx.commands.executeCommand('workbench.action.foldAllExpand'); // 展开所有行
+  await hx.commands.executeCommand('workbench.action.foldAllExpand'); 
   if (index === -1)
     return hx.window.setStatusBarMessage(`未找到${tagName}标签`, 10000);
   await activeEditor.setSelection(index, index);
-  await hx.commands.executeCommand('workbench.action.foldLineContract'); // 折叠单行
-  await hx.commands.executeCommand('workbench.action.copyEditor'); // 复制分栏，会复制左侧光标位置
-  await hx.commands.executeCommand('workbench.action.foldAllContract'); // 折叠所有行
-  await hx.commands.executeCommand('workbench.action.foldLineExpand'); // 展开单行
-  await hx.commands.executeCommand('cursorRight'); // 用于触发滚动效果
+  await hx.commands.executeCommand('workbench.action.foldLineContract'); 
+  await hx.commands.executeCommand('workbench.action.copyEditor'); 
+  await hx.commands.executeCommand('workbench.action.foldAllContract'); 
+  await hx.commands.executeCommand('workbench.action.foldLineExpand'); 
+  await hx.commands.executeCommand('cursorRight'); 
 }
 
 /** 左侧分栏显示template、style标签，右侧分栏显示script标签 */
@@ -96,16 +108,15 @@ const contractStyleTag = hx.commands.registerCommand(
 const contractNoScriptTag = hx.commands.registerCommand(
   'extension.contractNoScriptTag',
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
-    // 非vue文件直接复制分栏
+    let activeEditor = await hx.window.getActiveTextEditor(); 
     if (activeEditor.document.languageId !== 'vue') {
       return hx.commands.executeCommand('workbench.action.copyEditor');
     }
-    const word = activeEditor.document.getText(); // 当前编辑器的所有文本
+    const word = activeEditor.document.getText(); 
     const scriptIndex = word.indexOf('<script');
     const templateIndex = word.indexOf('<template');
     const styleIndex = word.indexOf('<style');
-    await hx.commands.executeCommand('workbench.action.foldAllExpand'); // 展开所有行
+    await hx.commands.executeCommand('workbench.action.foldAllExpand'); 
     if (templateIndex !== -1) {
       await activeEditor.setSelection(templateIndex, templateIndex);
       await hx.commands.executeCommand('workbench.action.foldLineContract');
@@ -117,11 +128,11 @@ const contractNoScriptTag = hx.commands.registerCommand(
     if (scriptIndex !== -1) {
       await activeEditor.setSelection(scriptIndex, scriptIndex);
     }
-    await hx.commands.executeCommand('workbench.action.copyEditor'); // 复制分栏，会复制左侧光标位置
+    await hx.commands.executeCommand('workbench.action.copyEditor'); 
     if (scriptIndex !== -1) {
       await hx.commands.executeCommand('workbench.action.foldLineContract');
     }
-    hx.commands.executeCommand('cursorRight'); // 用于触发滚动效果
+    hx.commands.executeCommand('cursorRight'); 
   }
 );
 
