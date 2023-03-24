@@ -13,7 +13,9 @@ const getAllIndex = (str, char) => {
 
 let index = 0;
 
-// 跳转至上一个""处
+/**
+ *  跳转至上一个""处
+ */
 const jumpLastQuote = hx.commands.registerCommand(
   'extension.jumpLastQuote',
   async () => {
@@ -41,7 +43,9 @@ const jumpLastQuote = hx.commands.registerCommand(
   }
 );
 
-// 跳转至下一个""处
+/**
+ *  跳转至下一个""处
+ */
 const jumpNextQuote = hx.commands.registerCommand(
   'extension.jumpNextQuote',
   async () => {
