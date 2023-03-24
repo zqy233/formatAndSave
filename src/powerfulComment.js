@@ -2,8 +2,9 @@ const hx = require('hbuilderx');
 const powerfulComment = hx.commands.registerCommand(
   'extension.powerfulComment',
   async () => {
-    const activeEditor = await hx.window.getActiveTextEditor(); // 获取当前编辑器
+    const activeEditor = await hx.window.getActiveTextEditor(); 
     const { selections, document } = activeEditor;
+    // HBuilderX支持多光标选中
     selections.forEach(async (selection) => {
       await comment(selection, document, activeEditor);
     });
