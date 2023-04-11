@@ -22,10 +22,8 @@ function comment(selection, document, activeEditor) {
     // 单击，则直接调用注释命令
     if (originStart === originEnd) {
       await hx.commands.executeCommand("editor.action.commentLine");
-      console.log(22222);
       return resolve();
     }
-    console.log(33333);
     // 获取开始行结束行的信息，计算上\t\n符号的位置，获取正确的注释位置
     const startAndEndLine = await Promise.all([
       document.lineFromPosition(originStart),
