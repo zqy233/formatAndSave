@@ -14,7 +14,7 @@
   "main": "./extension",
   "configurationFileInfos": {
     ".prettierrc.js": {
-      "description": "自定义prettier格式化规则。注意！优先使用项目下的prettier配置文件（项目需要导入至左侧目录中）"
+      "description": "自定义prettier格式化规则。注意！被格式化的文件若存在于左侧目录项目列表下，优先使用项目下的prettier配置文件"
     }
   },
   "configurationFiles": [
