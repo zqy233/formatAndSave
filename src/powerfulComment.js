@@ -1,8 +1,8 @@
-const hx = require('hbuilderx');
+const hx = require("hbuilderx");
 const powerfulComment = hx.commands.registerCommand(
-  'extension.powerfulComment',
+  "extension.powerfulComment",
   async () => {
-    const activeEditor = await hx.window.getActiveTextEditor(); 
+    const activeEditor = await hx.window.getActiveTextEditor();
     const { selections, document } = activeEditor;
     // HBuilderX支持多光标选中
     selections.forEach(async (selection) => {
@@ -32,7 +32,7 @@ function comment(selection, document, activeEditor) {
 
     // 单击，则直接调用注释命令
     if (originStart === originEnd) {
-      await hx.commands.executeCommand('editor.action.commentLine');
+      await hx.commands.executeCommand("editor.action.commentLine");
       return resolve();
     }
 
@@ -47,8 +47,8 @@ function comment(selection, document, activeEditor) {
       word,
       start,
       end,
-      '<!--',
-      '-->'
+      "<!--",
+      "-->"
     );
 
     // 获取选择文本中所有`/*`和`*/`的位置
@@ -56,8 +56,8 @@ function comment(selection, document, activeEditor) {
       word,
       start,
       end,
-      '/*',
-      '*/'
+      "/*",
+      "*/"
     );
 
     // 选中内容没有注释，直接调用注释命令
@@ -171,7 +171,7 @@ async function noCommentPositionsDeal(
   originEnd
 ) {
   activeEditor.setSelection(start, end);
-  await hx.commands.executeCommand('editor.action.commentLine');
+  await hx.commands.executeCommand("editor.action.commentLine");
   activeEditor.setSelection(originStart, originEnd);
 }
 
@@ -264,6 +264,6 @@ async function commentPositionsDeal(
       );
     }
   }
-  await hx.commands.executeCommand('editor.action.commentLine'); 
+  await hx.commands.executeCommand("editor.action.commentLine");
   activeEditor.setSelection(start, end); // 恢复光标位置
 }

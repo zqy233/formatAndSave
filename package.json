@@ -3,7 +3,7 @@
   "name": "formatAndSave",
   "description": "1.prettier格式化（基于根目录配置文件），2.vue文件双分栏模式且自动折叠，3.html和css中嵌套注释，4.使用vscode打开所在目录，5.快速选中双引号区域，6.生成块注释`/** */`",
   "displayName": "formatAndSave",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "publisher": "zqy",
   "engines": {
     "HBuilderX": "^2.7.0"
@@ -12,6 +12,14 @@
     "Other"
   ],
   "main": "./extension",
+  "configurationFileInfos": {
+    ".prettierrc.js": {
+      "description": "自定义prettier格式化规则。注意！优先使用项目下的prettier配置文件（项目需要导入至左侧目录中）"
+    }
+  },
+  "configurationFiles": [
+    ".prettierrc.js"
+  ],
   "activationEvents": [
     "onCommand:extension.foldAllExpandAndCopyEditor",
     "onCommand:extension.copyEditorAll",
@@ -161,7 +169,7 @@
     "fast-diff": "^1.2.0"
   },
   "devDependencies": {
-    "prettier": "2.8.6"
+    "prettier": "2.8.7"
   },
   "license": "MIT"
 }

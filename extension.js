@@ -1,10 +1,10 @@
 // const formatAndSave = require('./src/formatAndSave.js');
-const copyEditorAutoFold = require('./src/copyEditorAutoFold.js');
-const jumpQuote = require('./src/jumpQuote.js');
-const openWithVscode = require('./src/openWithVscode.js');
-const blockComment = require('./src/blockComment.js');
-const powerfulComment = require('./src/powerfulComment.js');
-const extensionPrettier = require('./src/prettier.js');
+const copyEditorAutoFold = require("./src/copyEditorAutoFold.js");
+const jumpQuote = require("./src/jumpQuote.js");
+const openWithVscode = require("./src/openWithVscode.js");
+const blockComment = require("./src/blockComment.js");
+const powerfulComment = require("./src/powerfulComment.js");
+const extensionPrettier = require("./src/prettier.js");
 //该方法将在插件激活的时候调用
 function activate(context) {
   // context.subscriptions.push(formatAndSave);

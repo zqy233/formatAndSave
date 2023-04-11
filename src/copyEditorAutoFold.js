@@ -1,4 +1,4 @@
-const hx = require('hbuilderx');
+const hx = require("hbuilderx");
 
 // hx.commands.executeCommand('workbench.action.foldAllExpand');
 // 展开所有行
@@ -17,15 +17,15 @@ const hx = require('hbuilderx');
 
 /** 无折叠模式 */
 const foldAllExpandAndCopyEditor = hx.commands.registerCommand(
-  'extension.foldAllExpandAndCopyEditor',
+  "extension.foldAllExpandAndCopyEditor",
   async () => {
     let activeEditor = await hx.window.getActiveTextEditor();
-    if (activeEditor.document.languageId !== 'vue') {
-      return hx.commands.executeCommand('workbench.action.copyEditor');
+    if (activeEditor.document.languageId !== "vue") {
+      return hx.commands.executeCommand("workbench.action.copyEditor");
     }
-    await hx.commands.executeCommand('workbench.action.foldAllExpand');
-    await hx.commands.executeCommand('workbench.action.copyEditor');
-    await hx.commands.executeCommand('cursorRight');
+    await hx.commands.executeCommand("workbench.action.foldAllExpand");
+    await hx.commands.executeCommand("workbench.action.copyEditor");
+    await hx.commands.executeCommand("cursorRight");
   }
 );
 
@@ -34,13 +34,13 @@ async function copyEditorAndContract(activeEditor, index, tag) {
   if (index !== -1) {
     // 选中标签所在行
     await activeEditor.setSelection(index, index);
-    await hx.commands.executeCommand('workbench.action.copyEditor');
-    await hx.commands.executeCommand('workbench.action.foldAllContract');
-    await hx.commands.executeCommand('workbench.action.foldLineExpand');
-    await hx.commands.executeCommand('cursorRight');
+    await hx.commands.executeCommand("workbench.action.copyEditor");
+    await hx.commands.executeCommand("workbench.action.foldAllContract");
+    await hx.commands.executeCommand("workbench.action.foldLineExpand");
+    await hx.commands.executeCommand("cursorRight");
     // 非style标签，则置焦到上一个分栏
-    if (tag !== 'style') {
-      await hx.commands.executeCommand('workbench.action.prevpane');
+    if (tag !== "style") {
+      await hx.commands.executeCommand("workbench.action.prevpane");
     }
   } else {
     hx.window.setStatusBarMessage(`未找到${tag}标签`, 10000);
@@ -52,87 +52,87 @@ async function copyEditorAndContract(activeEditor, index, tag) {
 
 /** 左分栏不折叠，右分栏则创建三次，分别显示template、script、style标签 */
 const copyEditorAll = hx.commands.registerCommand(
-  'extension.copyEditorAll',
+  "extension.copyEditorAll",
   async () => {
     let activeEditor = await hx.window.getActiveTextEditor();
-    if (activeEditor.document.languageId !== 'vue') {
-      return hx.commands.executeCommand('workbench.action.copyEditor');
+    if (activeEditor.document.languageId !== "vue") {
+      return hx.commands.executeCommand("workbench.action.copyEditor");
     }
     const word = activeEditor.document.getText();
-    const templateIndex = word.indexOf('<template');
-    const scriptIndex = word.indexOf('<script');
-    const styleIndex = word.indexOf('<style');
-    await hx.commands.executeCommand('workbench.action.foldAllExpand');
-    await copyEditorAndContract(activeEditor, templateIndex, 'template');
-    await copyEditorAndContract(activeEditor, scriptIndex, 'script');
-    await copyEditorAndContract(activeEditor, styleIndex, 'style');
+    const templateIndex = word.indexOf("<template");
+    const scriptIndex = word.indexOf("<script");
+    const styleIndex = word.indexOf("<style");
+    await hx.commands.executeCommand("workbench.action.foldAllExpand");
+    await copyEditorAndContract(activeEditor, templateIndex, "template");
+    await copyEditorAndContract(activeEditor, scriptIndex, "script");
+    await copyEditorAndContract(activeEditor, styleIndex, "style");
   }
 );
 
 /** 左侧显示两个标签，右侧显示单个标签的通用函数 */
 async function leftTwoTagsAndRightOneTag(tagName) {
   let activeEditor = await hx.window.getActiveTextEditor();
-  if (activeEditor.document.languageId !== 'vue') {
-    return hx.commands.executeCommand('workbench.action.copyEditor');
+  if (activeEditor.document.languageId !== "vue") {
+    return hx.commands.executeCommand("workbench.action.copyEditor");
   }
   const word = activeEditor.document.getText();
-  const index = word.indexOf('<' + tagName);
-  await hx.commands.executeCommand('workbench.action.foldAllExpand');
+  const index = word.indexOf("<" + tagName);
+  await hx.commands.executeCommand("workbench.action.foldAllExpand");
   if (index === -1)
     return hx.window.setStatusBarMessage(`未找到${tagName}标签`, 10000);
   await activeEditor.setSelection(index, index);
-  await hx.commands.executeCommand('workbench.action.foldLineContract');
-  await hx.commands.executeCommand('workbench.action.copyEditor');
-  await hx.commands.executeCommand('workbench.action.foldAllContract');
-  await hx.commands.executeCommand('workbench.action.foldLineExpand');
-  await hx.commands.executeCommand('cursorRight');
+  await hx.commands.executeCommand("workbench.action.foldLineContract");
+  await hx.commands.executeCommand("workbench.action.copyEditor");
+  await hx.commands.executeCommand("workbench.action.foldAllContract");
+  await hx.commands.executeCommand("workbench.action.foldLineExpand");
+  await hx.commands.executeCommand("cursorRight");
 }
 
 /** 左侧分栏显示template、style标签，右侧分栏显示script标签 */
 const contractScriptTag = hx.commands.registerCommand(
-  'extension.contractScriptTag',
+  "extension.contractScriptTag",
   () => {
-    leftTwoTagsAndRightOneTag('script');
+    leftTwoTagsAndRightOneTag("script");
   }
 );
 
 /** 左侧分栏显示template、script标签，右测分栏显示style标签 */
 const contractStyleTag = hx.commands.registerCommand(
-  'extension.contractStyleTag',
+  "extension.contractStyleTag",
   () => {
-    leftTwoTagsAndRightOneTag('style');
+    leftTwoTagsAndRightOneTag("style");
   }
 );
 
 /** 左侧分栏显示script,右侧分栏显示template、style标签 */
 const contractNoScriptTag = hx.commands.registerCommand(
-  'extension.contractNoScriptTag',
+  "extension.contractNoScriptTag",
   async () => {
     let activeEditor = await hx.window.getActiveTextEditor();
-    if (activeEditor.document.languageId !== 'vue') {
-      return hx.commands.executeCommand('workbench.action.copyEditor');
+    if (activeEditor.document.languageId !== "vue") {
+      return hx.commands.executeCommand("workbench.action.copyEditor");
     }
     const word = activeEditor.document.getText();
-    const scriptIndex = word.indexOf('<script');
-    const templateIndex = word.indexOf('<template');
-    const styleIndex = word.indexOf('<style');
-    await hx.commands.executeCommand('workbench.action.foldAllExpand');
+    const scriptIndex = word.indexOf("<script");
+    const templateIndex = word.indexOf("<template");
+    const styleIndex = word.indexOf("<style");
+    await hx.commands.executeCommand("workbench.action.foldAllExpand");
     if (templateIndex !== -1) {
       await activeEditor.setSelection(templateIndex, templateIndex);
-      await hx.commands.executeCommand('workbench.action.foldLineContract');
+      await hx.commands.executeCommand("workbench.action.foldLineContract");
     }
     if (styleIndex !== -1) {
       await activeEditor.setSelection(styleIndex, styleIndex);
-      await hx.commands.executeCommand('workbench.action.foldLineContract');
+      await hx.commands.executeCommand("workbench.action.foldLineContract");
     }
     if (scriptIndex !== -1) {
       await activeEditor.setSelection(scriptIndex, scriptIndex);
     }
-    await hx.commands.executeCommand('workbench.action.copyEditor');
+    await hx.commands.executeCommand("workbench.action.copyEditor");
     if (scriptIndex !== -1) {
-      await hx.commands.executeCommand('workbench.action.foldLineContract');
+      await hx.commands.executeCommand("workbench.action.foldLineContract");
     }
-    hx.commands.executeCommand('cursorRight');
+    hx.commands.executeCommand("cursorRight");
   }
 );
 

@@ -1,4 +1,4 @@
-const hx = require('hbuilderx');
+const hx = require("hbuilderx");
 
 // 获取所有"符号的位置
 const getAllIndex = (str, char) => {
@@ -17,12 +17,12 @@ let index = 0;
  *  跳转至上一个""处
  */
 const jumpLastQuote = hx.commands.registerCommand(
-  'extension.jumpLastQuote',
+  "extension.jumpLastQuote",
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); 
-    const word = activeEditor.document.getText(); 
+    let activeEditor = await hx.window.getActiveTextEditor();
+    const word = activeEditor.document.getText();
     const positions = getAllIndex(word, '"');
-    const cursorPosition = activeEditor.selection.active; 
+    const cursorPosition = activeEditor.selection.active;
     for (let i = 0; i < positions.length; i++) {
       if (positions[i] < cursorPosition && positions[i + 1] > cursorPosition) {
         // 偶数说明在内侧，奇数说明在外侧
@@ -38,7 +38,7 @@ const jumpLastQuote = hx.commands.registerCommand(
     index = index - 2;
     activeEditor.setSelection(positions[index] + 1, positions[index + 1]);
     // 用于触发滚动效果
-    await hx.commands.executeCommand('cursorRight');
+    await hx.commands.executeCommand("cursorRight");
     activeEditor.setSelection(positions[index] + 1, positions[index + 1]);
   }
 );
@@ -47,10 +47,10 @@ const jumpLastQuote = hx.commands.registerCommand(
  *  跳转至下一个""处
  */
 const jumpNextQuote = hx.commands.registerCommand(
-  'extension.jumpNextQuote',
+  "extension.jumpNextQuote",
   async () => {
-    let activeEditor = await hx.window.getActiveTextEditor(); 
-    const word = activeEditor.document.getText(); 
+    let activeEditor = await hx.window.getActiveTextEditor();
+    const word = activeEditor.document.getText();
     const positions = getAllIndex(word, '"');
     const cursorPosition = activeEditor.selection.active;
     for (let i = 0; i < positions.length; i++) {
@@ -68,7 +68,7 @@ const jumpNextQuote = hx.commands.registerCommand(
     index = index + 2;
     activeEditor.setSelection(positions[index] + 1, positions[index + 1]);
     // 用于触发滚动效果
-    await hx.commands.executeCommand('cursorRight');
+    await hx.commands.executeCommand("cursorRight");
     activeEditor.setSelection(positions[index] + 1, positions[index + 1]);
   }
 );

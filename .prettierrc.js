@@ -12,13 +12,13 @@ module.exports = {
   semi: true,
 
   // 使用单引号而不是双引号<bool>，默认false
-  singleQuote: true,
+  singleQuote: false,
 
   // object对象中key值是否加引号<as-needed|consistent|preserve>，默认as-needed
   // as-needed-仅在需要时在对象属性周围添加引号
   // consistent-如果一个对象中至少有一个属性需要引号，所有属性添加引号
   // preserve-保留对象属性中用户输入使用的引号
-  quoteProps: 'as-needed',
+  quoteProps: "as-needed",
 
   // 在 JSX 中使用单引号而不是双引号<bool>，默认false
   jsxSingleQuote: false,
@@ -27,7 +27,7 @@ module.exports = {
   // es5-在 ES5 中有效的尾随逗号（对象、数组等），TypeScript 的类型参数中没有尾随逗号
   // none-没有尾随逗号
   // all-尽可能以逗号结尾（包括函数参数和调用）。要运行以这种方式格式化的 JavaScript 代码需要一个支持 ES2017（Node.js 8+ 或现代浏览器）或下层编译的引擎。这还会在 TypeScript 的类型参数中启用尾随逗号（自 2018 年 1 月发布的 TypeScript 2.7 起支持）
-  trailingComma: 'es5',
+  trailingComma: "es5",
 
   // 对象字面量中括号之间的空格<bool>，默认true
   bracketSpacing: true,
@@ -53,7 +53,7 @@ module.exports = {
   // 在唯一的箭头函数参数周围包含括号<always|avoid>，默认always
   // always-始终包含括号
   // avoid-尽可能省略括号
-  arrowParens: 'always',
+  arrowParens: "always",
 
   // Prettier 可以限制自己只格式化在文件顶部包含特殊注释（称为 pragma）的文件。这在逐渐将大型、未格式化的代码库过渡到 Prettier 时非常有用<bool>，默认false
   requirePragma: false,
@@ -65,25 +65,25 @@ module.exports = {
   // always-如果超过最大宽度换行
   // never-不要换行
   // preserve-按原样显示
-  proseWrap: 'preserve',
+  proseWrap: "preserve",
 
   // 指定 HTML、Vue、Angular 和 Handlebars 的全局空格敏感度<css|strict|ignore>，默认css
   // css-遵循CSS属性的默认值
   // strict-所有标签周围的空格（或缺少空格）被认为是重要的
   // ignore-所有标签周围的空格（或缺少空格）被认为是无关紧要的
-  htmlWhitespaceSensitivity: 'ignore',
+  htmlWhitespaceSensitivity: "ignore",
 
   // vue文件script和style标签中是否缩进<bool>，默认false
   vueIndentScriptAndStyle: false,
 
   // 行尾换行符<lf|crlf|cr|auto>，默认lf
-  endOfLine: 'lf',
+  endOfLine: "lf",
 
   // 控制 Prettier 是否格式化嵌入在文件中的引用代码<off|auto>，默认auto
   // auto–如果 Prettier 可以自动识别，则格式化嵌入代码
   // off-从不自动格式化嵌入代码
-  embeddedLanguageFormatting: 'auto',
+  embeddedLanguageFormatting: "auto",
 
   // 在 HTML、Vue 和 JSX 中强制执行每行单个属性<bool>，默认false
-  singleAttributePerLine: true,
+  singleAttributePerLine: false,
 };
