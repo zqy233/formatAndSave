@@ -4,10 +4,11 @@ const powerfulComment = hx.commands.registerCommand(
   async () => {
     const activeEditor = await hx.window.getActiveTextEditor();
     const { selections, document } = activeEditor;
-    // HBuilderX支持多光标选中
-    selections.forEach(async (selection) => {
-      await comment(selection, document, activeEditor);
-    });
+    // 支持多光标选中情况，依次处理
+    for (let i = 0; i < selections.length; i++) {
+      activeEditor.setSelection(selections[i].start, selections[i].end);
+      await comment(selections[i], document, activeEditor);
+    }
   }
 );
 
@@ -18,6 +19,13 @@ function comment(selection, document, activeEditor) {
   return new Promise(async (resolve) => {
     let { start: originStart, end: originEnd } = selection;
 
+    // 单击，则直接调用注释命令
+    if (originStart === originEnd) {
+      await hx.commands.executeCommand("editor.action.commentLine");
+      console.log(22222);
+      return resolve();
+    }
+    console.log(33333);
     // 获取开始行结束行的信息，计算上\t\n符号的位置，获取正确的注释位置
     const startAndEndLine = await Promise.all([
       document.lineFromPosition(originStart),
@@ -29,12 +37,6 @@ function comment(selection, document, activeEditor) {
     const start = startAndEndLine[0].start + matchReg1[0].length;
     // 结束位置=行结束位置-\t\n
     const end = startAndEndLine[1].end - matchReg2[0].length;
-
-    // 单击，则直接调用注释命令
-    if (originStart === originEnd) {
-      await hx.commands.executeCommand("editor.action.commentLine");
-      return resolve();
-    }
 
     // 获取选中文本内容
     let word = document.getText({
