@@ -194,6 +194,12 @@ const extensionPrettier = hx.commands.registerCommand(
       "zqy-formatAndSave",
       ".prettierrc.js"
     );
+    const prettierrcJsAppDataPath = path.resolve(
+      hx.env.appData,
+      "extensions",
+      "zqy-formatAndSave",
+      ".prettierrc.js"
+    );
     // 如果是string，说明当前文件不在项目中，使用插件默认配置文件格式化
     if (typeof workspaceFolder.uri === "string") {
       hx.window.setStatusBarMessage(
@@ -203,12 +209,14 @@ const extensionPrettier = hx.commands.registerCommand(
       );
       // 有可能插件默认配置文件.prettierrc.js被删除，这时需要提示用户
       const [noPrettierrcJs] = await to(
-        fs.access(prettierrcJsPath, fs.constants.F_OK)
+        fs.access(prettierrcJsAppDataPath, fs.constants.F_OK)
       );
       if (noPrettierrcJs) {
         // 不传选项值，prettier则会使用默认值格式化，但这仍是预料之外的情况，属于需要修复的bug
         hx.window.showErrorMessage(
-          "加载插件默认配置文件.prettierrc.js出错，请将报错信息告知开发者" +
+          "加载插件默认配置文件.prettierrc.js出错，请将以下报错信息告知开发者" +
+            "\n" +
+            noPrettierrcJs +
             "\n"
         );
         const formattedText = getFormattedText(
@@ -222,7 +230,12 @@ const extensionPrettier = hx.commands.registerCommand(
         return diffEdit(text, formattedText, activeEditor);
       }
       // 一般来说，插件默认配置文件.prettierrc.js不会被删除，正常格式化
-      return formattWithOptions(filepath, prettierrcJsPath, text, activeEditor);
+      return formattWithOptions(
+        filepath,
+        prettierrcJsAppDataPath,
+        text,
+        activeEditor
+      );
     }
     // 否则是对象，说明当前文件在项目中，使用项目根目录配置格式化
     const workspaceFolderPath = workspaceFolder.uri.fsPath;
