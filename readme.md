@@ -39,7 +39,7 @@ prettier 默认支持 `JavaScript`、 `Flow`、 `JSX`、`TypeScript`、 `TSX`、
 
 ### `.prettierignore`忽略文件
 
-在 HBuilderX 左侧目录的任意项目的任意文件中`ctrl+s`，，如果项目根目录没有忽略文件，会自动生成`.prettierignore`，用于指定哪些文件或文件目录忽略 prettier 的格式化
+在 HBuilderX 左侧目录的任意项目的任意文件中`ctrl+s`，如果项目根目录没有忽略文件，会自动生成`.prettierignore`，用于指定哪些文件或文件目录忽略 prettier 的格式化
 
 插件默认生成的`.prettierignore`内容是`uni_modules`，表示该目录下的所有文件 prettier 会忽略，在这些文件中`ctrl+s`不会进行格式化
 
@@ -114,7 +114,7 @@ vue 文件中右键菜单选择`向右复制分栏并自动折叠`，选择二�
 
 fix：顺带修复了，HBuilderX 注释命令开始行和结束行如果不选择完全，注释的位置会出现错误的问题
 
-## ✨ 功能 4 快速选中双引号区域
+## ✨ 功能 4 快速选中双引号区域 
 
 > vue 代码开发很多时候都需要在`双引号""`区域内写代码，这种时候一般只能用鼠标来移动光标，不是很快捷
 

@@ -188,12 +188,12 @@ const extensionPrettier = hx.commands.registerCommand(
     // 根据当前文件路径获取所在项目目录信息
     const workspaceFolder = await hx.workspace.getWorkspaceFolder(filepath);
     // 插件默认配置文件路径
-    const prettierrcJsPath = path.resolve(
-      hx.env.appRoot,
-      "plugins",
-      "zqy-formatAndSave",
-      ".prettierrc.js"
-    );
+    // const prettierrcJsPath = path.resolve(
+    //   hx.env.appRoot,
+    //   "plugins",
+    //   "zqy-formatAndSave",
+    //   ".prettierrc.js"
+    // );
     const prettierrcJsAppDataPath = path.resolve(
       hx.env.appData,
       "extensions",
@@ -251,7 +251,7 @@ const extensionPrettier = hx.commands.registerCommand(
     // 未找到配置文件则返回null，使用插件的prettier配置文件进行创建
     if (!configFilePath) {
       const [readFileErr, defaultConfig] = await to(
-        fs.readFile(prettierrcJsPath, {
+        fs.readFile(prettierrcJsAppDataPath, {
           encoding: "utf-8",
         })
       );
