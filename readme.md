@@ -6,7 +6,7 @@
 
 ## ✨ 功能 1 prettier 格式化(测试中)
 
-基于 prettier 最新版本@2.8.7 实现，感谢`DCloud-HX-WKP`在开发过程中提供了所遇问题的解决方案
+基于 prettier 最新版本@2.8.8 实现，感谢`DCloud-HX-WKP`在开发过程中提供了所遇问题的解决方案
 
 支持读取项目根目录配置文件进行 prettier 格式化，如果没有配置文件，则会自动在项目根目录创建`.prettierrc.js`和`.prettierignore`（具体用法请查看下方）
 

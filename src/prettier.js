@@ -187,19 +187,28 @@ const extensionPrettier = hx.commands.registerCommand(
     const text = document.getText();
     // 根据当前文件路径获取所在项目目录信息
     const workspaceFolder = await hx.workspace.getWorkspaceFolder(filepath);
-    // 插件默认配置文件路径
-    // const prettierrcJsPath = path.resolve(
-    //   hx.env.appRoot,
-    //   "plugins",
-    //   "zqy-formatAndSave",
-    //   ".prettierrc.js"
-    // );
-    const prettierrcJsAppDataPath = path.resolve(
+
+    // 当用户在插件设置中点击默认配置文件链接后，才会在appData中生成相应文件目录，该目录中的默认配置文件可以在插件设置中跳转与编辑，所以有该配置文件的话应使用该文件
+    // 目录：C:\Users\用户\AppData\Roaming\HBuilder X\extensions\extensions\zqy-formatAndSave\.prettierrc.js
+    let prettierrcJsAppDataPath = path.resolve(
       hx.env.appData,
       "extensions",
       "zqy-formatAndSave",
       ".prettierrc.js"
     );
+    // appData中没有则使用appRoot目录下的默认插件配置文件
+    const [noPrettierrcJsAppData] = await to(
+      fs.access(prettierrcJsAppDataPath, fs.constants.F_OK)
+    );
+    if (noPrettierrcJsAppData) {
+      prettierrcJsAppDataPath = path.resolve(
+        hx.env.appRoot,
+        "plugins",
+        "zqy-formatAndSave",
+        ".prettierrc.js"
+      );
+    }
+
     // 如果是string，说明当前文件不在项目中，使用插件默认配置文件格式化
     if (typeof workspaceFolder.uri === "string") {
       hx.window.setStatusBarMessage(
@@ -214,8 +223,7 @@ const extensionPrettier = hx.commands.registerCommand(
       if (noPrettierrcJs) {
         // 不传选项值，prettier则会使用默认值格式化，但这仍是预料之外的情况，属于需要修复的bug
         hx.window.showErrorMessage(
-          "加载插件默认配置文件.prettierrc.js出错，请将以下报错信息告知开发者" +
-            "\n" +
+          "加载插件默认配置文件.prettierrc.js出错，请将以下报错信息告知开发者：" +
             noPrettierrcJs +
             "\n"
         );
