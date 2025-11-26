@@ -5,39 +5,77 @@ const fs = require("fs/promises");
 const path = require("path");
 const to = require("await-to-js").default;
 
+// 匹配 lang="uts" 或 lang='uts'
+const UTS_REGEX = /lang=(['"]?)uts\1/gim;
+
+// 匹配 <script ...> 标签，但不包含 lang 属性 (用于匹配带其他属性的无lang标签)
+const NO_LANG_SCRIPT_ATTR_REGEX = /<script\s+(?!.*lang\s*=)([^>]*?)>/gim;
+
+// 匹配只有 <script> 或 <script></script> 且无属性的情况
+const SIMPLE_SCRIPT_REGEX = /<script\s*>/gim;
+
 /**
  * 获取格式化后的文本
- * @param {*} filepath 需要格式化的文件路径
- * @param {*} text 需要格式化的文本内容
- * @param {*} options 原始的配置信息
- * @param {*} formatOptions 处理后的配置信息
- * @returns
+ * @param {string} filepath 需要格式化的文件路径
+ * @param {string} text 需要格式化的文本内容
+ * @param {Object} options 原始的配置信息
+ * @param {Object} formatOptions 处理后的配置信息
+ * @returns {string} 格式化后的文本内容，如果出错则返回空字符串。
  */
 function getFormattedText(filepath, text, options, formatOptions) {
-  // 获取当前文件正确的后缀名
-  const pathParse = path.parse(filepath);
-  let extname = "";
-  // 如.prettierignore这类文件名，ext属性为空，需要使用name
-  if (pathParse.ext) {
-    extname = pathParse.ext;
-  } else {
-    extname = pathParse.name;
+  let tempText = text;
+  let formattedText = "";
+
+  const isUvueFile = filepath.endsWith('.uvue');
+  const MARKER_ATTR = 'data-p-lang';
+  const ORIGINAL_LANG_VALUE = 'uts';
+  const NO_LANG_VALUE = 'no-lang';
+
+  // ----------------------------------------------------
+  // I. 预处理 (Pre-processing) - 标记并替换为 lang="ts"
+  // ----------------------------------------------------
+  if (isUvueFile) {
+
+    // --- A. 替换 lang="uts" -> lang="ts" 并标记 ---
+    tempText = tempText.replace(UTS_REGEX, (match, quote) => {
+      // 替换成 lang="ts" 并添加标记属性
+      return `lang=${quote}ts${quote} ${MARKER_ATTR}="${ORIGINAL_LANG_VALUE}"`;
+    });
+
+    // --- B. 处理无 lang 属性的 <script> 块 (添加 lang="ts" 和标记) ---
+
+    // 1. 匹配带其他属性的无 lang 标签
+    tempText = tempText.replace(NO_LANG_SCRIPT_ATTR_REGEX, (match) => {
+      const insertion = `lang="ts" ${MARKER_ATTR}="${NO_LANG_VALUE}" `;
+      // 确保在 <script 后面添加 lang="ts"
+      return match.replace(/<script\s+/, `<script ${insertion}`);
+    });
+
+    // 2. 匹配简单 <script> 标签
+    tempText = tempText.replace(SIMPLE_SCRIPT_REGEX, `<script lang="ts" ${MARKER_ATTR}="${NO_LANG_VALUE}">`);
   }
-  // 指定nvue的parser
-  if (extname === ".nvue") {
+
+  // ----------------------------------------------------
+  // II. 文件类型判断与 Parser 指定
+  // ----------------------------------------------------
+  const pathParse = path.parse(filepath);
+  const extname = pathParse.ext || pathParse.name;
+
+  if (extname === ".nvue" || extname === ".uvue") {
     formatOptions["parser"] = "vue";
   }
-  // 使用配置文件parsers属性来指定parser，如：
-  // 这里仅为示例，上方代码已经指定了nvue的parser
-  // parsers: {
-  // ".nvue": "vue",
-  // }
-  if (options.parsers && options.parsers[extname]) {
+  else if (extname === ".uts") {
+    formatOptions["parser"] = "typescript";
+  }
+  else if (options.parsers && options.parsers[extname]) {
     formatOptions["parser"] = options.parsers[extname];
   }
-  let formattedText = "";
+
+  // ----------------------------------------------------
+  // III. 格式化 (Formatting)
+  // ----------------------------------------------------
   try {
-    return (formattedText = prettier.format(text, formatOptions));
+    formattedText = prettier.format(tempText, formatOptions);
   } catch (err) {
     // 如果是常见错误:不识别的文件类型，用状态栏显示报错
     const errMsg = JSON.stringify(err, Object.getOwnPropertyNames(err), 2);
@@ -52,6 +90,45 @@ function getFormattedText(filepath, text, options, formatOptions) {
     hx.window.showErrorMessage("prettier格式化出错：" + err + "\n");
     return "";
   }
+
+  // ----------------------------------------------------
+  // IV. 后处理 (Post-processing) - 还原标记
+  // ----------------------------------------------------
+  if (isUvueFile) {
+
+    // 构建匹配 lang="ts" 和标记属性的正则表达式
+    // 关键改变：在前面添加 (\s*) 捕获组，用于匹配 lang="ts" 前面的所有空格
+    const markerFullRegex = new RegExp(`(\\s*)(lang=(['"]?)ts\\3)\\s*${MARKER_ATTR}="([^"]*)"`, 'gim');
+
+    formattedText = formattedText.replace(markerFullRegex, (match, leadingSpaces, fullLangAttr, quote, originalValue) => {
+
+      // A. 还原 lang="uts"
+      if (originalValue === ORIGINAL_LANG_VALUE) {
+        // 替换回 lang="uts"
+        // 返回 leadingSpaces (保留原有的空格) + 还原后的 uts 属性
+        return `${leadingSpaces}lang=${quote}uts${quote}`;
+      }
+
+      // B. 还原无 lang 属性的脚本块
+      if (originalValue === NO_LANG_VALUE) {
+        // 如果是无 lang 标记，直接移除 lang="ts" 和标记属性。
+        // 我们的正则捕获了前面的空格 (leadingSpaces)，所以只需返回空字符串即可。
+        return '';
+      }
+
+      return match;
+    });
+
+    // 额外的最终清理：处理 <script setup> 还原后可能留下的双空格
+    // 匹配 <script + 2个或更多空格> (如果有 setup 属性则不会匹配)
+    // 这一步是为了防止 <script  setup> 中间出现多个空格
+    formattedText = formattedText.replace(/<script\s{2,}/gim, '<script ');
+
+    // 清理 <script   > 标签的尾部空格（如果有，则移除多余的）
+    formattedText = formattedText.replace(/<script\s+>/gim, '<script>');
+  }
+
+  return formattedText;
 }
 
 /**
@@ -224,8 +301,8 @@ const extensionPrettier = hx.commands.registerCommand(
         // 不传选项值，prettier则会使用默认值格式化，但这仍是预料之外的情况，属于需要修复的bug
         hx.window.showErrorMessage(
           "加载插件默认配置文件.prettierrc.js出错，请将以下报错信息告知开发者：" +
-            noPrettierrcJs +
-            "\n"
+          noPrettierrcJs +
+          "\n"
         );
         const formattedText = getFormattedText(
           filepath,
